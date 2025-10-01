@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,47 +10,49 @@
     <link rel="stylesheet" href="style/main.css">
     <title>NavBar</title>
 </head>
-
 <body>
-    <nav class="menu-lateral">
+    <div class="sidebar">
+        <nav class="menu-lateral">
 
-        <div class="btn-expandir">
-            <i class="bi bi-list" id="btn-exp"></i>
-        </div>
+            <div class="btn-expandir">
+                <i class="bi bi-list" id="btn-exp"></i>
+            </div>
 
-        <ul>
-            <li class="item-menu ativo">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-house-door"></i></span>
-                    <span class="txt-link">Home</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-columns-gap"></i></span>
-                    <span class="txt-link">Deshboard</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-calendar"></i></span>
-                    <span class="txt-link">Agenda</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-gear"></i></span>
-                    <span class="txt-link">Configuração</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-person-circle"></i></span>
-                    <span class="txt-link">Conta</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+            <ul>
+                <li class="item-menu ativo">
+                    <a href="#">
+                        <span class="icon"><i class="bi bi-house-door"></i></span>
+                        <span class="txt-link">Home</span>
+                    </a>
+                </li>
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="bi bi-columns-gap"></i></span>
+                        <span class="txt-link">Deshboard</span>
+                    </a>
+                </li>
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="bi bi-calendar"></i></span>
+                        <span class="txt-link">Agenda</span>
+                    </a>
+                </li>
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="bi bi-gear"></i></span>
+                        <span class="txt-link">Configuração</span>
+                    </a>
+                </li>
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="bi bi-person-circle"></i></span>
+                        <span class="txt-link">Conta</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
     <form action="" method="get">
         <div class="conteudo">
             <input type="text" name="search" class="search" placeholder="Pesquisar...">
@@ -67,5 +68,4 @@
 
     <script src="js/script.js"></script>
 </body>
-
 </html>

@@ -11,6 +11,11 @@ body{
     height: 900vh;
 }
 
+.sidebar{
+    display: flex;
+    width: 80px;
+}
+
 nav.menu-lateral{
     width: 80px;
     height: 100%;
