@@ -1,0 +1,34 @@
+form {
+    display: flex;
+    justify-content: center;
+    margin-right: 800px;
+    padding: 100px;
+}
+
+.search{
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+
+.pesquisa{
+    border: 0 none;
+    background: #FFF;
+}
+
+.adicionar{
+    border: 0 none;
+    background: #FFF;
+}
+
+.esp {
+    position: relative;
+    width: 300px;
+}
+
+
+
+
+
+
+
