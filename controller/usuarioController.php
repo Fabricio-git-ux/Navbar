@@ -5,48 +5,45 @@ include_once 'php/usuario.php';
 
 Class usuarioController{
     private $bd;
-    private $usuarios;
+    private $usuario;
 
     public function __construct() {
         $banco = new DataBase();
         $this->bd = $banco->conectar();
-        $this->usuarios =  new Usuario($this->bd);
-    }
-
-    public function indexUsuario(){
-        return $this->usuarios->lerTodos();
+        $this->usuario =  new Usuario($this->bd);
     }
 
     public function pesquisarUsuario($nome){
-        return $this->usuarios->lerUsuario($nome);
+        return $this->usuario->lerUsuario($nome);
     }
 
     public function localizarUsuario($id){
-        return $this->usuarios->pesquisarUsuario($id);
+        return $this->usuario->pesquisarUsuario($id);
     }
 
     public function cadastrarUsuario($usuario){
-        $this->usuarios->nome = $usuario['nome'];
-        $this->usuarios->email = $usuario['nome'];
-        $this->usuarios->senha = password_hash($usuario['senha'], PASSWORD_DEFAULT);
-        $this->usuarios->telefone = $usuario['telefone'];
+        var_dump("oi");
+        die();
+        $this->usuario->nome = $usuario['nome'];
+        $this->usuario->email = $usuario['email'];
+        $this->usuario->senha = $usuario['senha'];
+        $this->usuario->telefone = $usuario['telefone'];
 
-        if($this->usuarios->Cadastrar()){
-            header("Location: index.php");
+        if($this->usuario->Cadastrar()){
+            header("Location: ../pages/index.php");
             exit();
         }
         return false;
     }
 
     public function atualizarUsuario($dados){
-        $senha_hash = password_hash($this->senha, PASSWORD_DEFAULT);
-        $this->usuarios->id = $dados['id'];
-        $this->usuarios->nome = $dados['nome'];
-        $this->usuarios->email = $dados['email'];
-        $this->usuarios->senha = $dados['senha'];
-        $this->usuarios->telefone = $dados['telefone'];
+        $this->usuario->id = $dados['id'];
+        $this->usuario->nome = $dados['nome'];
+        $this->usuario->email = $dados['email'];
+        $this->usuario->senha = $dados['senha'];
+        $this->usuario->telefone = $dados['telefone'];
 
-        if($this->usuarios->atualizar()){
+        if($this->usuario->atualizar()){
             header("Location: #");
             exit();
         }
@@ -54,20 +51,20 @@ Class usuarioController{
     }
 
     public function excluirUsuario($id){
-        $this->usuarios->id = $id;
+        $this->usuario->id = $id;
 
-        if($this->usuarios->login()){
+        if($this->usuario->login()){
             header("Location: login.php");
             exit();
         }
     }
 
     public function login($email, $senha){
-        $this->usuarios->email = $email;
-        $this->usuarios->senha = $senha;
-        $this->usuarios->login();
+        $this->usuario->email = $email;
+        $this->usuario->senha = $senha;
+        $this->usuario->login();
 
-        if($this->usuarios->login()){
+        if($this->usuario->login()){
             header("Location: index.php");
             exit();
         } else {
