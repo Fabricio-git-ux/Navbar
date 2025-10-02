@@ -12,6 +12,7 @@
 </head>
 <body>
     <div class="sidebar">
+        <div class="espaco1"></div>
         <nav class="menu-lateral">
 
             <div class="btn-expandir">
@@ -51,9 +52,8 @@
                 </li>
             </ul>
         </nav>
-    </div>
-
-    <form action="" method="get">
+        <div class="espaco2">
+        <form action="" method="get">
         <div class="conteudo">
             <input type="text" name="search" class="search" placeholder="Pesquisar...">
         </div>
@@ -64,6 +64,11 @@
             <button class="adicionar"><i class="bi bi-plus-circle"></i></button>
         </div>
     </form>
+    </div>
+    </div>
+    
+
+    
 
 
     <script src="js/script.js"></script>

@@ -11,7 +11,8 @@ Class DataBase{
         $this->con = null;
 
         try {
-            $this->con = new PDO("mysql:host=$this->host;dbname=$this->banco", $this->usuario, $this->senha);
+            $dsn = ("mysql:host=$this->host;dbname=$this->banco");
+            $this->con = new PDO($dsn, $this->usuario, $this->senha);
         } catch (PDOException $e) {
             echo "Erro ao conectar: " . $e->getMessage();
         }
