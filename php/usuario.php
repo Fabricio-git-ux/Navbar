@@ -68,30 +68,41 @@ Class usuario{
         }
     }
 
+    public function excluir(){
+        $sql = "DELETE FROM usuario WHERE id = :id";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+
+        if($stmt->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function login(){
         $sql = "SELECT * FROM usuario WHERE email = :email";
         $stmt = $this->bd->prepare($sql);
         $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
         $stmt->execute();
-
         $resultado = $stmt->fetch(PDO::FETCH_OBJ);
 
         if($resultado){
             if(password_verify($this->senha, $resultado->senha)){
                 session_start();
-                $_SESSION['usuarios'] = $resultado;
+                $_SESSION['usuario'] = $resultado;
                 return true;
                 exit();
             } else {
                 session_start();
                 $_SESSION['erro'] = "Email ou senha incorretos.";
-                header("Location: login.php");
+                header("Location: ../pages/login.php");
                 exit();
             }
         } else {
             session_start();
             $_SESSION['erros'] = "Usuario nao cadastrado.";
-            header("Location: login.php");
+            header("Location: ../pages/login.php");
             exit();
         }
     }

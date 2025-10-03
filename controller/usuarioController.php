@@ -1,7 +1,7 @@
 <?php
 
-include_once 'configs/database.php';
-include_once 'php/usuario.php';
+include_once(__DIR__ . '/../configs/database.php');
+include_once(__DIR__ . '/../php/usuario.php');
 
 Class usuarioController{
     private $bd;
@@ -10,7 +10,7 @@ Class usuarioController{
     public function __construct() {
         $banco = new DataBase();
         $this->bd = $banco->conectar();
-        $this->usuario =  new Usuario($this->bd);
+        $this->usuario =  new usuario($this->bd);
     }
 
     public function pesquisarUsuario($nome){
@@ -21,19 +21,13 @@ Class usuarioController{
         return $this->usuario->pesquisarUsuario($id);
     }
 
-    public function cadastrarUsuario($usuario){
-        var_dump("oi");
-        die();
-        $this->usuario->nome = $usuario['nome'];
-        $this->usuario->email = $usuario['email'];
-        $this->usuario->senha = $usuario['senha'];
-        $this->usuario->telefone = $usuario['telefone'];
+    public function cadastrarUsuario($dados){
+        $this->usuario->nome = $dados['nome'];
+        $this->usuario->email = $dados['email'];
+        $this->usuario->senha = $dados['senha'];
+        $this->usuario->telefone = $dados['telefone'];
 
-        if($this->usuario->Cadastrar()){
-            header("Location: ../pages/index.php");
-            exit();
-        }
-        return false;
+        return $this->usuario->Cadastrar();
     }
 
     public function atualizarUsuario($dados){
@@ -53,8 +47,8 @@ Class usuarioController{
     public function excluirUsuario($id){
         $this->usuario->id = $id;
 
-        if($this->usuario->login()){
-            header("Location: login.php");
+        if($this->usuario->excluir()){
+            header("Location: index.php");
             exit();
         }
     }
@@ -66,9 +60,10 @@ Class usuarioController{
 
         if($this->usuario->login()){
             header("Location: index.php");
-            exit();
+            exit;
         } else {
-            header("Location: login.php");
+            header("Location: pages/login.php");
+            exit;
         }
     }
 }

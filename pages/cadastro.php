@@ -1,16 +1,17 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-include_once "../configs/database.php";
 include_once "../controller/usuarioController.php";
 
-//var_dump("oi");
-//die();
+
 if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
     $controller = new usuarioController();
     
-   // if(isset($_POST['usuario'])){
+    if(isset($_POST['usuario'])){
         $controller->cadastrarUsuario($_POST['usuario']);
-//}
+        header('Location: index.php');
+    }
 }
 
 ?>
