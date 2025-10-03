@@ -53,16 +53,16 @@ Class usuarioController{
         }
     }
 
-    public function login($email, $senha){
+    public function loginUsuario($email, $senha){
         $this->usuario->email = $email;
         $this->usuario->senha = $senha;
-        $this->usuario->login();
+        $resultado = $this->usuario->login();
 
-        if($this->usuario->login()){
+        if($resultado){
             header("Location: index.php");
             exit;
         } else {
-            header("Location: pages/login.php");
+            header("Location: /pages/login.php");
             exit;
         }
     }

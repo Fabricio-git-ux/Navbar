@@ -81,31 +81,37 @@ Class usuario{
     }
 
     public function login(){
-        $sql = "SELECT * FROM usuario WHERE email = :email";
-        $stmt = $this->bd->prepare($sql);
-        $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
-        $stmt->execute();
-        $resultado = $stmt->fetch(PDO::FETCH_OBJ);
+    $sql = "SELECT * FROM usuario WHERE email = :email";
+    $stmt = $this->bd->prepare($sql);
+    $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
+    $stmt->execute();
+    $resultado = $stmt->fetch(PDO::FETCH_OBJ);
 
-        if($resultado){
-            if(password_verify($this->senha, $resultado->senha)){
+    if($resultado){
+        if(password_verify($this->senha, $resultado->senha)){
+            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
-                $_SESSION['usuario'] = $resultado;
-                return true;
-                exit();
-            } else {
-                session_start();
-                $_SESSION['erro'] = "Email ou senha incorretos.";
-                header("Location: ../pages/login.php");
-                exit();
             }
+            $_SESSION['usuario'] = $resultado;
+            return true; // Login OK, controller decide o redirecionamento
         } else {
-            session_start();
-            $_SESSION['erros'] = "Usuario nao cadastrado.";
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['erro'] = "Email ou senha incorretos.";
             header("Location: ../pages/login.php");
             exit();
         }
+    } else {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION['erro'] = "Usuário não cadastrado.";
+        header("Location: ../pages/login.php");
+        exit();
     }
+}
+
     
 }
 

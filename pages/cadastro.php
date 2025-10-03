@@ -10,7 +10,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
     
     if(isset($_POST['usuario'])){
         $controller->cadastrarUsuario($_POST['usuario']);
-        header('Location: index.php');
+        header('Location: /Navbar/index.php');
     }
 }
 
