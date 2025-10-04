@@ -89,26 +89,14 @@ Class usuario{
 
     if($resultado){
         if(password_verify($this->senha, $resultado->senha)){
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
+            session_start();
             $_SESSION['usuario'] = $resultado;
-            return true; // Login OK, controller decide o redirecionamento
+            header('Location: /Navbar/index.php');
+            exit();
         } else {
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
-            $_SESSION['erro'] = "Email ou senha incorretos.";
-            header("Location: ../pages/login.php");
+            header("Location: login.php");
             exit();
         }
-    } else {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        $_SESSION['erro'] = "Usuário não cadastrado.";
-        header("Location: ../pages/login.php");
-        exit();
     }
 }
 
