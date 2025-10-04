@@ -50,6 +50,12 @@
                         <span class="txt-link">Conta</span>
                     </a>
                 </li>
+                <li class="item-menu">
+                    <a href="#">
+                        <span class="icon"><i class="bi bi-box-arrow-left"></i></span>
+                        <span class="txt-link">Saida</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <div class="espaco2">

@@ -1,6 +1,8 @@
 <?php
 
-Class usuario{
+
+class usuario
+{
     public $id;
     public $nome;
     public $email;
@@ -9,11 +11,13 @@ Class usuario{
 
     private $bd;
 
-    public function __construct($bd){
+    public function __construct($bd)
+    {
         $this->bd = $bd;
     }
 
-    public function lerTodos(){
+    public function lerTodos()
+    {
         $sql = "SELECT * FROM usuario";
         $resultado = $this->bd->query($sql);
         $resultado->execute();
@@ -21,12 +25,14 @@ Class usuario{
         return $resultado->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function lerUsuario($nome){
+    public function lerUsuario($nome)
+    {
         $nome = "%" . $nome . "%";
         $sql = "SELECT * FROM usuario WHERE nome LIKE :nome";
     }
 
-    public function pesquisarUsuario($id){
+    public function pesquisarUsuario($id)
+    {
         $sql = "SELECT * FROM usuario WHERE id LIKE :id";
         $resultado = $this->bd->prepare($sql);
         $resultado->bindParam(':id', $id);
@@ -35,72 +41,72 @@ Class usuario{
         return $resultado->fetch(PDO::FETCH_OBJ);
     }
 
-    public function Cadastrar(){
+    public function Cadastrar()
+    {
         $senha_hash = password_hash($this->senha, PASSWORD_DEFAULT);
         $sql = "INSERT INTO usuario(nome, email, senha, telefone) VALUES (:nome, :email, :senha, :telefone)";
         $stmt = $this->bd->prepare($sql);
-        $stmt->bindParam(':nome', $this->nome, PDO::PARAM_STR);        
+        $stmt->bindParam(':nome', $this->nome, PDO::PARAM_STR);
         $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
-        $stmt->bindParam(':senha',$senha_hash, PDO::PARAM_STR);
+        $stmt->bindParam(':senha', $senha_hash, PDO::PARAM_STR);
         $stmt->bindParam(':telefone', $this->telefone, PDO::PARAM_STR);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function atualizar(){
+    public function atualizar()
+    {
         $senha_hash = password_hash($this->senha, PASSWORD_DEFAULT);
         $sql = "UPDATE usuario SET nome = :nome, email = :email, senha = :senha, telefone = :telefone WHERE id = :id";
         $stmt = $this->bd->prepare($sql);
-        $stmt->bindParam(':nome', $this->nome, PDO::PARAM_STR);        
+        $stmt->bindParam(':nome', $this->nome, PDO::PARAM_STR);
         $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
         $stmt->bindParam(':senha', $senha_hash, PDO::PARAM_STR);
         $stmt->bindParam(':telefone', $this->telefone, PDO::PARAM_STR);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function excluir(){
+    public function excluir()
+    {
         $sql = "DELETE FROM usuario WHERE id = :id";
         $stmt = $this->bd->prepare($sql);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function login(){
-    $sql = "SELECT * FROM usuario WHERE email = :email";
-    $stmt = $this->bd->prepare($sql);
-    $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
-    $stmt->execute();
-    $resultado = $stmt->fetch(PDO::FETCH_OBJ);
+    public function login()
+    {
+        $sql = "SELECT * FROM usuario WHERE email = :email";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_OBJ);
 
-    if($resultado){
-        if(password_verify($this->senha, $resultado->senha)){
-            session_start();
-            $_SESSION['usuario'] = $resultado;
-            header('Location: /Navbar/index.php');
-            exit();
-        } else {
-            header("Location: login.php");
-            exit();
+        if ($resultado) {
+            if (password_verify($this->senha, $resultado->senha)) {
+                session_start();
+                $_SESSION['usuario'] = $resultado;
+                header('Location: /Navbar/index.php');
+                exit();
+            } else {
+                header("Location: login.php");
+                exit();
+            }
         }
     }
 }
-
-    
-}
-
-?>

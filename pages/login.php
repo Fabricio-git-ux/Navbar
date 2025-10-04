@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     <script>
       function handleCredentialResponse(response){
         console.log("Token JWT:", response.credential);
-        alert("Login realizado com sucesso");
+        alert("Login realizado com sucesso 😃");
       }
 
       window.onload =  function(){

@@ -22,25 +22,37 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../style/cadastro.css">
 </head>
 <body>
-    <h1>Teste de cadastrado</h1>
-    
-    <form action="" method="POST">
-        <label for="">Nome</label>
-        <input type="text" name="usuario[nome]">
 
-        <label for="">E-mail</label>
-        <input type="email" name="usuario[email]">
+    <!-- From Uiverse.io by ammarsaa --> 
+<form class="form" method="POST">
+    <p class="title">Cadastrar </p>
+    <p class="message">Inscreva-se. </p>
+        <div class="flex">
+        <label>
+            <input class="input" name="usuario[nome]" type="text" required="">
+            <span>Digite seu nome</span>
+        </label>
+    </div>  
+            
+    <label>
+        <input class="input" type="email" name="usuario[email]" required="">
+        <span>exemplo@gmail.com</span>
+    </label> 
+        
+    <label>
+        <input class="input" type="password" name="usuario[senha]" required="">
+        <span>Senha</span>
+    </label>
+    <label>
+        <input class="input" type="password" name="usuario[telefone]" required="">
+        <span>(00) 0000-0000</span>
+    </label>
+    <button class="submit" type="submit">Cadastrar</button>
+    <p class="signin">Already have an acount ? <a href="#">Signin</a> </p>
+</form>
 
-        <label for="">Senha</label>
-        <input type="password" name="usuario[senha]">
-
-        <label for="">Tel</label>
-        <input type="tel" name="usuario[telefone]">
-
-        <button type="submit">Registrar</button>
-
-    </form>
 </body>
 </html>
