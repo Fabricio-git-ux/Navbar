@@ -32,14 +32,14 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
     <p class="message">Inscreva-se. </p>
         <div class="flex">
         <label>
-            <input class="input" name="usuario[nome]" type="text" required="">
+            <input class="input" id="input" name="usuario[nome]" type="text" required="">
             <span>Digite seu nome</span>
         </label>
     </div>  
             
     <label>
         <input class="input" type="email" name="usuario[email]" required="">
-        <span>exemplo@gmail.com</span>
+        <span>E-mail</span>
     </label> 
         
     <label>
@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
     </label>
     <label>
         <input class="input" type="password" name="usuario[telefone]" required="">
-        <span>(00) 0000-0000</span>
+        <span>Telefone</span>
     </label>
     <button class="submit" type="submit">Cadastrar</button>
     <p class="signin">Already have an acount ? <a href="#">Signin</a> </p>

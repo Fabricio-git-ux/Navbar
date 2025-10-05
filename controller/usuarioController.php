@@ -25,7 +25,6 @@ Class usuarioController{
         $this->usuario->nome = $dados['nome'];
         $this->usuario->email = $dados['email'];
         $this->usuario->senha = $dados['senha'];
-        $this->usuario->telefone = $dados['telefone'];
 
         return $this->usuario->Cadastrar();
     }
@@ -35,7 +34,6 @@ Class usuarioController{
         $this->usuario->nome = $dados['nome'];
         $this->usuario->email = $dados['email'];
         $this->usuario->senha = $dados['senha'];
-        $this->usuario->telefone = $dados['telefone'];
 
         if($this->usuario->atualizar()){
             header("Location: #");

@@ -1,6 +1,8 @@
 /* From Uiverse.io by ammarsaa */ 
 .form {
   display: flex;
+  justify-content: center;
+  justify-items: center;
   flex-direction: column;
   gap: 10px;
   max-width: 350px;
@@ -81,6 +83,10 @@
   outline: 0;
   border: 1px solid rgba(105, 105, 105, 0.397);
   border-radius: 10px;
+}
+
+#input{
+    width: 50%;
 }
 
 .form label .input + span {
