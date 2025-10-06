@@ -5,13 +5,9 @@ form {
     padding: 100px;
 }
 
-.search{ 
-    font-size: 20px;
-}
-
 .pesquisa{
-    border: 0 none;
-    background: #FFF;
+  border: 0 none;
+  background: #FFF;
 }
 
 /* From Uiverse.io by OnlyCodeChannel */ 
@@ -23,7 +19,6 @@ form {
   gap: 8px;
   background: #2f3640;
   border-radius: 50px;
-  position: relative;
 }
 
 .searchButton {

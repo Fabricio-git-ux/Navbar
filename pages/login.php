@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $controller->login($_POST['email'], $_POST['senha']);
   }
 }
-
+ 
 
 ?>
 
@@ -24,26 +24,42 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   <title>teste de login</title>
   <link rel="stylesheet" href="../style/login.css">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script>
-      function handleCredentialResponse(response){
-        console.log("Token JWT:", response.credential);
-        alert("Login realizado com sucesso 😃");
+<script>
+  function handleCredentialResponse(response) {
+    // Envia o token para o PHP via fetch
+    fetch("auth_google.php",  {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ credential: response.credential })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.sucesso) {
+        window.location.href = "../index.php"; // ou a página que quiser
+      } else {
+        alert("Erro no login com Google: " + data.mensagem);
       }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Erro na comunicação com o servidor");
+    });
+  }
 
-      window.onload =  function(){
-        google.accounts.id.initialize({
-          client_id: "312183358933-0b757uv9gunqjt8jmchpplos7n048hop.apps.googleusercontent.com",
-          callback: handleCredentialResponse
-        });
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: "312183358933-0b757uv9gunqjt8jmchpplos7n048hop.apps.googleusercontent.com",
+      callback: handleCredentialResponse
+    });
 
-        google.accounts.id.renderButton(
-          document.getElementById("g_id_signin"),
-          { theme: "outline", size: "large", width: "250"}
-        );
+    google.accounts.id.renderButton(
+      document.getElementById("g_id_signin"),
+      { theme: "outline", size: "large", width: "250" }
+    );
 
-        google.accounts.id.prompt();
-      }
-    </script>
+    google.accounts.id.prompt();
+  }
+</script>
 </head>
 <body>
 
