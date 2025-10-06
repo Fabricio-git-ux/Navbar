@@ -13,8 +13,7 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="espaco1"></div>
+    <div class="main">
         <nav class="menu-lateral">
 
             <div class="btn-expandir">
@@ -60,8 +59,8 @@
                 </li>
             </ul>
         </nav>
-        <div class="search">
-            <!-- From Uiverse.io by OnlyCodeChannel -->
+
+       <!-- <div class="search">
             <form action="" method="post">
                 <div class="searchBox" id="pesquisa">
 
@@ -99,9 +98,8 @@
 
 
             </form>
-        </div>
+        </div>-->
     </div>
-
 
 
 

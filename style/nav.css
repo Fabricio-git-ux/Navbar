@@ -8,7 +8,8 @@
 }
 
 body{
-    height: 900vh;
+    height: 100vh;
+    display: flex;
 }
 
 

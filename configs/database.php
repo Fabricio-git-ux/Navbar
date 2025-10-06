@@ -1,7 +1,7 @@
 <?php
 
 Class DataBase{
-    private $host = "127.0.0.1:3306";
+    private $host = "127.0.0.1:3307";
     private $banco = "gerenciador_tarefas";
     private $usuario = "root";
     private $senha = "";
