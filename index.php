@@ -86,12 +86,15 @@
                     </svg>
                 </button>
             </div>
+            <div class="add_button">
+                <button class="add"><i class="bi-plus-circle"></i></button>
+            </div>
         </form>
         <div class="conteudo">
             <!-- Conteúdo principal da página -->
             <h1>Tarefas</h1>
             <div>
-                
+
             </div>
         </div>
     </div>

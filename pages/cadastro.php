@@ -21,10 +21,10 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cadastrar</title>
     <link rel="stylesheet" href="../style/cadastro.css">
 </head>
-<body>
+<body class="container">
 
     <!-- From Uiverse.io by ammarsaa --> 
 <form class="form" method="POST">
@@ -51,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
         <span>Telefone</span>
     </label>
     <button class="submit" type="submit">Cadastrar</button>
-    <p class="signin">Already have an acount ? <a href="#">Signin</a> </p>
+    <p class="signin">Já tem uma conta? <a href="login.php">Signin</a> </p>
 </form>
 
 </body>
