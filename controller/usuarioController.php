@@ -25,7 +25,7 @@ Class usuarioController{
         $this->usuario->nome = $dados['nome'];
         $this->usuario->email = $dados['email'];
         $this->usuario->senha = $dados['senha'];
-
+        
         return $this->usuario->Cadastrar();
     }
 

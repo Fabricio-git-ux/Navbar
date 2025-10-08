@@ -1,3 +1,30 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
+include_once "../controller/tarefaController.php";
+
+$controller = new tarefaController();
+
+// Cadastrar tarefa
+if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['tarefa'])) {
+    $controller->cadastrarTarefa($_POST['tarefa']);
+    header("Location: tarefa.php");
+    exit();
+}
+
+// Excluir tarefa
+if (isset($_GET['excluir'])) {
+    $controller->excluirTarefa($_GET['excluir']);
+    header("Location: tarefa.php");
+    exit();
+}
+
+// Listar todas as tarefas
+$tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que retorna todas as tarefas
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -7,25 +34,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style/nav.css">
-    <title>Conteudo</title>
+    <link rel="stylesheet" href="../style/nav.css">
+    <title>Tarefas</title>
 </head>
 
 <body>
+    
+    <!--- Sidebar lateral --->
     <nav class="menu-lateral">
         <div class="btn-expandir">
             <i class="bi bi-list" id="btn-exp"></i>
         </div>
         <ul>
-            <li class="item-menu ativo">
-                <a href="#">
+            <li class="item-menu">
+                <a href="../index.php">
                     <span class="icon"><i class="bi bi-house-door"></i></span>
                     <span class="txt-link">Home</span>
                 </a>
             </li>
-            <li class="item-menu">
-                <a href="/../Navbar/pages/tarefa.php">
-                    <span class="icon"><i class="bi bi-card-checklist"></i></span>
+            <li class="item-menu ativo">
+                <a href="#">
+                    <span class="icon"><i class="bi bi-card-checklist"></i></i></span>
                     <span class="txt-link">Tarefas</span>
                 </a>
             </li>
@@ -55,6 +84,9 @@
             </li>
         </ul>
     </nav>
+
+    <!--- Barra de pesquisa --->
+
     <div class="pesquisa">
         <form action="" method="post">
             <div class="searchBox">
@@ -92,14 +124,39 @@
         </form>
         <div class="conteudo">
             <!-- Conteúdo principal da página -->
-            <h1>Tarefas</h1>
-            <div>
 
-            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($tarefas as $tarefa): ?>
+                        <tr>
+                            <td><?= $tarefa->id_tarefa ?? $tarefa['id_tarefa'] ?></td>
+                            <td><?= $tarefa->titulo ?? $tarefa['titulo'] ?></td>
+                            <td><?= $tarefa->descricao ?? $tarefa['descricao'] ?></td>
+                            <td><?= $tarefa->status ?? $tarefa['status'] ?></td>
+                            <td>
+                                <a href="editar_tarefa.php?id=<?= $tarefa->id_tarefa ?? $tarefa['id_tarefa'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="?excluir=<?= $tarefa->id_tarefa ?? $tarefa['id_tarefa'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
         </div>
+        </form>
+
     </div>
 
-    <script src="js/script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 
 </html>
