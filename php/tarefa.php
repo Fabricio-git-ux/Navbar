@@ -44,18 +44,23 @@ class tarefa
     }
 
     public function cadastrar()
-    {
-        $sql = "INSERT INTO tarefa (titulo, descricao, status, id_usuario, id_categoria) 
+{
+    $sql = "INSERT INTO tarefa (titulo, descricao, status, id_usuario, id_categoria) 
             VALUES (:titulo, :descricao, :status, :id_usuario, :id_categoria)";
-        $stmt = $this->bd->prepare($sql);
-        $stmt->bindParam(':titulo', $this->titulo, PDO::PARAM_STR);
-        $stmt->bindParam(':descricao', $this->descricao, PDO::PARAM_STR);
-        $stmt->bindParam(':status', $this->status, PDO::PARAM_STR);
-        $stmt->bindParam(':id_usuario', $this->id_usuario, PDO::PARAM_INT);
-        $stmt->bindParam(':id_categoria', $this->id_categoria, PDO::PARAM_INT);
+    $stmt = $this->bd->prepare($sql);
 
-        return $stmt->execute();
-    }
+    $stmt->bindParam(':titulo', $this->titulo, PDO::PARAM_STR);
+    $stmt->bindParam(':descricao', $this->descricao, PDO::PARAM_STR);
+    $stmt->bindParam(':status', $this->status, PDO::PARAM_STR);
+    $stmt->bindParam(':id_usuario', $this->id_usuario, PDO::PARAM_INT);
+
+    // ✅ Verifica se a categoria foi informada. Se não, insere NULL.
+    $id_categoria = !empty($this->id_categoria) ? $this->id_categoria : null;
+    $stmt->bindParam(':id_categoria', $id_categoria, PDO::PARAM_INT);
+
+    return $stmt->execute();
+}
+
 
 
 

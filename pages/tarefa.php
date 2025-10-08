@@ -119,7 +119,9 @@ $tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que ret
                 </button>
             </div>
             <div class="add_button">
-                <button class="add"><i class="bi-plus-circle"></i></button>
+                <a href="../pages/pag_tarefa.php">
+                    <span class="add"><i class="bi-plus-circle"></i></span>
+                </a>
             </div>
         </form>
         <div class="conteudo">
