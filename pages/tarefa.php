@@ -130,7 +130,6 @@ $tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que ret
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Título</th>
                         <th>Descrição</th>
                         <th>Status</th>
@@ -138,18 +137,19 @@ $tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que ret
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($tarefas as $tarefa): ?>
+                    <?php if($tarefas) : ?>
+                        <?php foreach ($tarefas as $tarefa): ?>
                         <tr>
-                            <td><?= $tarefa->id_tarefa ?? $tarefa['id_tarefa'] ?></td>
-                            <td><?= $tarefa->titulo ?? $tarefa['titulo'] ?></td>
-                            <td><?= $tarefa->descricao ?? $tarefa['descricao'] ?></td>
-                            <td><?= $tarefa->status ?? $tarefa['status'] ?></td>
+                            <td><?= $tarefa['titulo'] ?></td>
+                            <td><?= $tarefa['descricao'] ?></td>
+                            <td><?= $tarefa['status'] ?></td>
                             <td>
                                 <a href="editar_tarefa.php?id=<?= $tarefa->id_tarefa ?? $tarefa['id_tarefa'] ?>" class="btn btn-warning btn-sm">Editar</a>
                                 <a href="?excluir=<?= $tarefa->id_tarefa ?? $tarefa['id_tarefa'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
+                    <?php endif ?>
                 </tbody>
             </table>
 

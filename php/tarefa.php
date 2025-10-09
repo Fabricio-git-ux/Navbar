@@ -45,8 +45,7 @@ class tarefa
 
     public function cadastrar()
 {
-    $sql = "INSERT INTO tarefa (titulo, descricao, status, id_usuario, id_categoria) 
-            VALUES (:titulo, :descricao, :status, :id_usuario, :id_categoria)";
+    $sql = "INSERT INTO tarefa (titulo, descricao, status, id_usuario, id_categoria) VALUES (:titulo, :descricao, :status, :id_usuario, :id_categoria)";
     $stmt = $this->bd->prepare($sql);
 
     $stmt->bindParam(':titulo', $this->titulo, PDO::PARAM_STR);
@@ -59,10 +58,8 @@ class tarefa
     $stmt->bindParam(':id_categoria', $id_categoria, PDO::PARAM_INT);
 
     return $stmt->execute();
+
 }
-
-
-
 
     public function atualizar()
     {

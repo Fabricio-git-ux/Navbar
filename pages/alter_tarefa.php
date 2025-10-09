@@ -12,9 +12,9 @@ $categoriaController = new categoriaController();
 // Busca todas as categorias para popular o <select>
 $categorias = $categoriaController->pesquisarCategoria(""); // ou use um método listarTodosCategorias()
 
-// Cadastrar tarefa
+// Alterar tarefa
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tarefa'])) {
-    $tarefaController->cadastrarTarefa($_POST['tarefa']);
+    $tarefaController->atualizarTarefa($_POST['tarefa']);
     header("Location: /../Navbar/pages/tarefa.php");
     exit();
 }
