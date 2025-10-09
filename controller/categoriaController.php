@@ -8,39 +8,66 @@ class categoriaController {
     private $categoria;
 
     public function __construct() {
-        $banco = new DataBase();
-        $this->bd = $banco->conectar();
-        $this->categoria = new categoria($this->bd);
+        try {
+            $banco = new DataBase();
+            $this->bd = $banco->conectar();
+
+            if (!$this->bd) {
+                $this->categoria = null;
+            } else {
+                $this->categoria = new categoria($this->bd);
+            }
+        } catch (\Throwable $e) {
+            error_log("Erro no categoriaController: " . $e->getMessage());
+            $this->bd = null;
+            $this->categoria = null;
+        }
     }
 
     // Pesquisa categorias pelo nome (LIKE)
     public function pesquisarCategoria($nome_categoria){
-        return $this->categoria->lerCategoria($nome_categoria);
+        if ($this->categoria) {
+            return $this->categoria->lerCategoria($nome_categoria);
+        }
+
+        // Mock temporário para teste do select
+        return [
+            ['id_categoria' => 1, 'nome_categoria' => 'Categoria de teste'],
+        ];
     }
 
     // Localizar categoria pelo ID
     public function localizarCategoriaPorID($id_categoria){
-        return $this->categoria->pesquisarCategoriaID($id_categoria);
+        if ($this->categoria) {
+            return $this->categoria->pesquisarCategoriaID($id_categoria);
+        }
+        return null;
     }
 
-    // Localizar categoria pelo nome (pode retornar várias)
+    // Localizar categoria pelo nome
     public function localizarCategoriaPorNome($nome_categoria){
-        return $this->categoria->pesquisarCategoriaNome($nome_categoria);
+        if ($this->categoria) {
+            return $this->categoria->pesquisarCategoriaNome($nome_categoria);
+        }
+        return [];
     }
 
     // Cadastrar nova categoria
     public function cadastrarCategoria($dados){
-        $this->categoria->nome_categoria = $dados['nome_categoria'];
+        if (!$this->categoria) return false;
+        $this->categoria->nome_categoria = $dados['nome_categoria'] ?? '';
         return $this->categoria->cadastrar();
     }
 
     // Atualizar categoria existente
     public function atualizarCategoria($dados){
-        $this->categoria->id_categoria = $dados['id_categoria'];
-        $this->categoria->nome_categoria = $dados['nome_categoria'];
+        if (!$this->categoria) return false;
+
+        $this->categoria->id_categoria = $dados['id_categoria'] ?? 0;
+        $this->categoria->nome_categoria = $dados['nome_categoria'] ?? '';
 
         if($this->categoria->atualizar()){
-            header("Location: index.php"); // redireciona após atualizar
+            header("Location: add_categoria.php");
             exit();
         }
         return false;
@@ -48,9 +75,11 @@ class categoriaController {
 
     // Excluir categoria
     public function excluirCategoria($id_categoria){
+        if (!$this->categoria) return false;
+
         $this->categoria->id_categoria = $id_categoria;
         if($this->categoria->excluir()){
-            header("Location: index.php"); // redireciona após excluir
+            header("Location: add_categoria.php");
             exit();
         }
         return false;

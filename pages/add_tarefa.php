@@ -1,16 +1,22 @@
 <?php
-error_reporting(E_ALL);
+
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 
 include_once(__DIR__ . '/../controller/tarefaController.php');
 include_once(__DIR__ . '/../controller/categoriaController.php');
+
+
 
 // Instancia os controllers
 $tarefaController = new tarefaController();
 $categoriaController = new categoriaController();
 
 // Busca todas as categorias para popular o <select>
-$categorias = $categoriaController->pesquisarCategoria(""); // ou use um método listarTodosCategorias()
+$categorias = $categoriaController->pesquisarCategoria("");
 
 // Cadastrar tarefa
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tarefa'])) {
@@ -64,22 +70,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tarefa'])) {
                     <label for="id_categoria" class="form-label">Categoria</label>
                     <select class="form-select" id="id_categoria" name="tarefa[id_categoria]">
                         <option value="">Nenhuma categoria</option>
-                        <?php foreach ($categorias as $cat): ?>
-                            <option value="<?= $cat['id_categoria'] ?>">
-                                <?= htmlspecialchars($cat['nome_categoria']) ?>
-                            </option>
-                        <?php endforeach; ?>
+                        <?php if (!empty($categorias) && is_array($categorias)): ?>
+                            <?php foreach ($categorias as $cat): ?>
+                                <option value="<?= $cat['id_categoria'] ?>">
+                                    <?= htmlspecialchars($cat['nome_categoria']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="">Nenhuma categoria cadastrada</option>
+                            <option value="">Carol quer ir embora cedo de novo</option>
+                        <?php endif; ?>
                     </select>
                 </div>
-                <div>
-                    <!-- Botão criar categoria -->
-                    <a href="/pages/add_categoria.php" class="btn-success">Criar Categoria</a>
-                </div>
+    
             </div>
-
-            <button type="submit" class="btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
 
         </form>
+        <div style="background-color: black;">
+        <p>Qualquer Coisa</p>
+            <!-- Botão criar categoria -->
+        <a href="/pages/add_categoria.php" class="btn btn-success">Criar Categoria</a>
+    </div> 
     </div>
 </body>
 

@@ -1,8 +1,6 @@
 <?php
 
 include_once(__DIR__ . '/../configs/database.php');
-include_once(__DIR__ . '/../controller/categoriaController.php');
-include_once(__DIR__ . '/../php/categoria.php');
 include_once(__DIR__ . '/../php/tarefa.php');
 
 class tarefaController
@@ -12,52 +10,80 @@ class tarefaController
 
     public function __construct()
     {
-        $banco = new DataBase();
-        $this->bd = $banco->conectar();
-        $this->tarefa = new tarefa($this->bd);
+        try {
+            $banco = new DataBase();
+            $this->bd = $banco->conectar();
+
+            if (!$this->bd) {
+                // Caso a conexão falhe, inicializa $tarefa como null
+                $this->tarefa = null;
+            } else {
+                $this->tarefa = new tarefa($this->bd);
+            }
+        } catch (\Throwable $e) {
+            // Se houver qualquer erro, captura e continua sem travar a página
+            error_log("Erro no tarefaController: " . $e->getMessage());
+            $this->bd = null;
+            $this->tarefa = null;
+        }
     }
 
+    // Retorna tarefas (mock se $tarefa não estiver inicializado)
     public function pesquisarTarefa($titulo)
     {
-        return $this->tarefa->lerTarefa($titulo);
-    }
+        if ($this->tarefa) {
+            return $this->tarefa->lerTarefa($titulo);
+        }
 
-    public function localizarTarefa($id_tarefa)
-    {
-        return $this->tarefa->pesquisarTarefa($id_tarefa);
+        // Mock temporário: evita erro e permite teste do HTML
+        return [
+            (object)[
+                'id_tarefa' => 1,
+                'titulo' => 'Tarefa de teste',
+                'descricao' => 'Descrição de teste',
+                'status' => 'Pendente'
+            ],
+        ];
     }
 
     public function cadastrarTarefa($dados)
     {
-        $this->tarefa->titulo = $dados['titulo'];
-        $this->tarefa->descricao = $dados['descricao'];
-        $this->tarefa->status = $dados['status'];
+        if (!$this->tarefa) return false;
 
-        // Aqui você define o usuário logado e a categoria escolhida
-        $this->tarefa->id_usuario = 1; // Exemplo fixo (depois pode pegar de $_SESSION)
-        $this->tarefa->id_categoria = 1; // Exemplo fixo (ou pegar de um select do formulário)*/
+        $this->tarefa->titulo = $dados['titulo'] ?? '';
+        $this->tarefa->descricao = $dados['descricao'] ?? '';
+        $this->tarefa->status = $dados['status'] ?? 'Pendente';
+
+        $this->tarefa->id_usuario = 1; // Exemplo fixo
+        $this->tarefa->id_categoria = $dados['id_categoria'] ?? 0;
 
         return $this->tarefa->cadastrar();
     }
 
-
-    public function atuzalizarTarefa($dados)
+    public function localizarTarefa($id_tarefa)
     {
-        $this->tarefa->id_tarefa = $dados['id_tarefa'];
-        $this->tarefa->titulo = $dados['titulo'];
-        $this->tarefa->descricao = $dados['descricao'];
-        $this->tarefa->status = $dados['status'];
+        if (!$this->tarefa) return null;
+        return $this->tarefa->pesquisarTarefa($id_tarefa);
+    }
 
-        if ($this->tarefa->atualizar()) {
-            header("Location: #");
-            exit();
-        }
-        return false;
+    public function atualizarTarefa($dados)
+    {
+        if (!$this->tarefa) return false;
+
+        $this->tarefa->id_tarefa = $dados['id_tarefa'] ?? 0;
+        $this->tarefa->titulo = $dados['titulo'] ?? '';
+        $this->tarefa->descricao = $dados['descricao'] ?? '';
+        $this->tarefa->status = $dados['status'] ?? 'Pendente';
+
+        return $this->tarefa->atualizar();
     }
 
     public function excluirTarefa($id_tarefa)
     {
-        header("Location: index.php");
-        exit();
+        if ($this->tarefa) {
+            $this->tarefa->id_tarefa = $id_tarefa;
+            return $this->tarefa->excluir();
+        }
+        return false;
     }
 }
