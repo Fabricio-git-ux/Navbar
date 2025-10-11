@@ -1,6 +1,7 @@
 <?php
 
 include_once(__DIR__ . '/../configs/database.php');
+include_once(__DIR__ . '/../controller/categoriaController.php');
 include_once(__DIR__ . '/../php/tarefa.php');
 
 class tarefaController
@@ -28,7 +29,7 @@ class tarefaController
         $this->tarefa->descricao = $dados['descricao'] ?? '';
         $this->tarefa->status = $dados['status'] ?? 'Pendente';
 
-        $this->tarefa->id_usuario = 1; // Exemplo fixo
+        $this->tarefa->id_usuario = 1;
         $this->tarefa->id_categoria = $dados['id_categoria'] ?? 0;
 
         return $this->tarefa->cadastrar();
@@ -41,19 +42,19 @@ class tarefaController
 
     public function atualizarTarefa($dados)
     {
-        if (!$this->tarefa) return false;
+        $this->tarefa->id_tarefa = $dados['id_tarefa'];
+        $this->tarefa->titulo = $dados['titulo'];
+        $this->tarefa->descricao = $dados['descricao'];
+        $this->tarefa->status = $dados['status'];
 
-        // ID da tarefa a ser atualizada
-        $this->tarefa->id_tarefa = $dados['id_tarefa'] ?? 0;
+        date_default_timezone_set('America/Sao_Paulo');
+        $this->tarefa->data_atualizacao =  date('Y-m-d H:i:s');
 
-        // Campos a serem atualizados
-        $this->tarefa->titulo = $dados['titulo'] ?? '';
-        $this->tarefa->descricao = $dados['descricao'] ?? '';
-        $this->tarefa->status = $dados['status'] ?? 'Pendente';
-        $this->tarefa->id_categoria = $dados['id_categoria'] ?? 0;
 
-        // Chama o método que faz o UPDATE no banco
-        return $this->tarefa->atualizar();
+        if ($this->tarefa->atualizar()) {
+            header("Location: tarefa.php");
+            exit();
+        }
     }
 
 

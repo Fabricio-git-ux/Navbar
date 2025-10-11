@@ -1,28 +1,44 @@
 <?php
+session_start();
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 
 include_once "../controller/tarefaController.php";
 
+$t = null;
+
 $controller = new tarefaController();
 
-// Cadastrar tarefa
-if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['tarefa'])) {
-    $controller->cadastrarTarefa($_POST['tarefa']);
-    header("Location: tarefa.php");
-    exit();
+// Criar ou editar (POST)
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    if (isset($_POST['criar'])) {
+        $controller->cadastrarTarefa($_POST['tarefa']);
+        header("Location: add_tarefa.php");
+        exit();
+    } elseif (isset($_POST['editar'])) {
+        $controller->atualizarTarefa($_POST['tarefa']);
+        unset($_SESSION['tarefas']);
+        header("Location: editar_tarefa.php");
+        exit();
+    }
 }
 
-// Excluir tarefa
-if (isset($_GET['excluir'])) {
+// Excluir (GET)
+if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['excluir'])) {
     $controller->excluirTarefa($_GET['excluir']);
     header("Location: tarefa.php");
     exit();
 }
 
+
 // Listar todas as tarefas
-$tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que retorna todas as tarefas
+$tarefa = $controller->pesquisarTarefa(""); // Aqui pode ser um método que retorna todas as tarefas
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +55,7 @@ $tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que ret
 </head>
 
 <body>
-    
+
     <!--- Sidebar lateral --->
     <nav class="menu-lateral">
         <div class="btn-expandir">
@@ -88,11 +104,11 @@ $tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que ret
     <!--- Barra de pesquisa --->
 
     <div class="pesquisa">
-        <form action="" method="post">
+        <form action="" method="POST">
             <div class="searchBox">
 
-                <input class="searchInput" type="text" name="" placeholder="Search something">
-                <button class="searchButton" href="#">
+                <input class="searchInput" type="text" name="pesquisa" placeholder="Search something">
+                <button class="searchButton">
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
                         <g clip-path="url(#clip0_2_17)">
@@ -119,10 +135,27 @@ $tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que ret
                 </button>
             </div>
             <div class="add_button">
-                <a href="../pages/pag_tarefa.php">
+                <button name="criar" type="submit" style="border: none; background: #fff; color: #355cd0ff;">
                     <span class="add"><i class="bi-plus-circle"></i></span>
-                </a>
+                </button>
             </div>
+
+            <div id="pesquisa" style="color: black;">
+                <?php
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    if (isset($_POST['pesquisa']) && trim($_POST['pesquisa']) !== '') {
+                        $t = $controller->pesquisarTarefa($_POST['pesquisa']);
+
+                        if (empty($_POST['pesquisa']) === "") {
+                            echo "Digite algo para pesquisar";
+                        } elseif (empty($t)) {
+                            echo "Nenhuma tarefa encontrada";
+                        }
+                    }
+                }
+                ?>
+            </div>
+
         </form>
         <div class="conteudo">
             <!-- Conteúdo principal da página -->
@@ -133,23 +166,47 @@ $tarefas = $controller->pesquisarTarefa(""); // Aqui pode ser um método que ret
                         <th>Título</th>
                         <th>Descrição</th>
                         <th>Status</th>
+                        <th>Data de Criacao</th>
+                        <th>Data de Alteracao</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if($tarefas) : ?>
-                        <?php foreach ($tarefas as $tarefa): ?>
-                        <tr>
-                            <td><?= $tarefa['titulo'] ?></td>
-                            <td><?= $tarefa['descricao'] ?></td>
-                            <td><?= $tarefa['status'] ?></td>
-                            <td>
-                                <a href="editar_tarefa.php?id=<?= $tarefa->id_tarefa ?? $tarefa['id_tarefa'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                                <a href="?excluir=<?= $tarefa->id_tarefa ?? $tarefa['id_tarefa'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    <?php endif ?>
+                    <?php
+                    $lista = $tarefa;
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pesquisa']) && trim($_POST['pesquisa']) !== '') {
+                        $t = $controller->pesquisarTarefa($_POST['pesquisa']);
+
+                        if (!empty($t)) {
+                            $lista = $t;
+                        } else {
+                            $lista = [];
+                        }
+                    }
+                    ?>
+
+                    <?php if (!empty($lista)) : ?>
+                        <?php foreach ($lista as $tarefas) : ?>
+                            <tr>
+                                <td hidden><?= htmlspecialchars($tarefas->id_tarefa) ?></td>
+                                <td><?= htmlspecialchars($tarefas->titulo) ?></td>
+                                <td><?= htmlspecialchars($tarefas->descricao) ?></td>
+                                <td><?= htmlspecialchars($tarefas->status) ?></td>
+                                <td><?= htmlspecialchars($tarefas->data_criacao) ?></td>
+                                <td><?= htmlspecialchars($tarefas->data_atualizacao ?? '') ?></td>
+
+
+                                <td>
+
+                                    <a href="editar_tarefa.php?alterar=<?= $tarefas->id_tarefa ?>" class="btn btn-warning btn-sm" id="editar">Editar</a>
+                                    <a href="tarefa.php?excluir=<?= $tarefas->id_tarefa ?>" name="excluir" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
                 </tbody>
             </table>
 
