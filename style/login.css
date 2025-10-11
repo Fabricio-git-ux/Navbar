@@ -161,7 +161,7 @@ body {
 }
 
 .sing:hover {
-  font-size: 150px;
+  font-size: 20px;
   transition: 0.5s;
   color: #2d79f3;
 }
