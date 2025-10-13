@@ -1,3 +1,20 @@
+<?php
+session_start(); // obrigatório para acessar o usuário logado
+
+// Verifica se usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    die("Você precisa estar logado para acessar esta página.");
+}
+
+include_once "controller/tarefaController.php";
+
+$controller = new tarefaController();
+
+// Buscar tarefas do usuário logado
+$listaTarefas = $controller->pesquisarTarefa($_SESSION['usuario_id']);
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 

@@ -3,6 +3,7 @@
 include_once(__DIR__ . '/../configs/database.php');
 include_once(__DIR__ . '/../controller/categoriaController.php');
 include_once(__DIR__ . '/../php/tarefa.php');
+include_once(__DIR__ . '/../controller/usuarioController.php');
 
 class tarefaController
 {
@@ -23,17 +24,23 @@ class tarefaController
 
     public function cadastrarTarefa($dados)
     {
-        if (!$this->tarefa) return false;
+         session_start(); // Inicia a sessão para acessar o ID do usuário
 
+    if (!isset($_SESSION['id_usuario'])) {
+        die("Usuário não logado."); // Segurança: evita cadastro sem login
+    }
         $this->tarefa->titulo = $dados['titulo'] ?? '';
         $this->tarefa->descricao = $dados['descricao'] ?? '';
         $this->tarefa->status = $dados['status'] ?? 'Pendente';
-
-        $this->tarefa->id_usuario = 1;
+        $this->tarefa->id_usuario = $_SESSION['id_usuario'];
         $this->tarefa->id_categoria = $dados['id_categoria'] ?? 0;
 
-        return $this->tarefa->cadastrar();
+        if ($this->tarefa->cadastrar()) {
+            header("Location: add_tarefa.php");
+            exit();
+        }
     }
+
 
     public function localizarTarefa($id_tarefa)
     {

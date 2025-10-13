@@ -13,6 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_categoria'])) {
     exit();
 }
 
+// Atualizar categoria (recebe POST de editar_categoria.php)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['alterar'])) {
+    $controller->atualizarCategoria([
+        'id_categoria' => $_POST['id_categoria'],
+        'nome_categoria' => $_POST['nome_categoria']
+    ]);
+    header("Location: add_categoria.php");
+    exit();
+}
+
+
 // Deletar categoria
 if (isset($_GET['excluir'])) {
     $id_categoria = intval($_GET['excluir']);
@@ -27,11 +38,13 @@ $categorias = $controller->pesquisarCategoria("");
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Gerenciar Categorias</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="p-4">
     <div class="container">
         <h1 class="mb-4">Gerenciar Categorias</h1>
@@ -59,8 +72,14 @@ $categorias = $controller->pesquisarCategoria("");
                 <?php if (!empty($categorias)): ?>
                     <?php foreach ($categorias as $cat): ?>
                         <tr>
+                            <td hidden><?= htmlspecialchars($cat->id_categoria) ?></td>
                             <td><?= htmlspecialchars($cat->nome_categoria) ?></td>
                             <td>
+                                <a href="editar_categoria.php?id=<?= $cat->id_categoria ?>" class="btn btn-warning btn-sm">
+                                    Editar
+                                </a>
+
+
                                 <a href="?excluir=<?= $cat->id_categoria ?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir esta categoria?')">
                                     Deletar
                                 </a>
@@ -76,4 +95,5 @@ $categorias = $controller->pesquisarCategoria("");
         </table>
     </div>
 </body>
+
 </html>

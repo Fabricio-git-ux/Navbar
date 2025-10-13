@@ -3,61 +3,74 @@
 include_once(__DIR__ . '/../configs/database.php');
 include_once(__DIR__ . '/../php/usuario.php');
 
-Class usuarioController{
+class usuarioController
+{
     private $bd;
     private $usuario;
 
-    public function __construct() {
+    public function __construct()
+    {
         $banco = new DataBase();
         $this->bd = $banco->conectar();
         $this->usuario =  new usuario($this->bd);
     }
 
-    public function pesquisarUsuario($nome){
+    public function pesquisarUsuario($nome)
+    {
         return $this->usuario->lerUsuario($nome);
     }
 
-    public function localizarUsuario($id){
+    public function localizarUsuario($id)
+    {
         return $this->usuario->pesquisarUsuario($id);
     }
 
-    public function cadastrarUsuario($dados){
+    public function cadastrarUsuario($dados)
+    {
         $this->usuario->nome = $dados['nome'];
         $this->usuario->email = $dados['email'];
         $this->usuario->senha = $dados['senha'];
-        
+
         return $this->usuario->Cadastrar();
     }
 
-    public function atualizarUsuario($dados){
-        $this->usuario->id = $dados['id'];
+    public function atualizarUsuario($dados)
+    {
+        $this->usuario->id_usuario = $dados['id_usuario'];
         $this->usuario->nome = $dados['nome'];
         $this->usuario->email = $dados['email'];
         $this->usuario->senha = $dados['senha'];
 
-        if($this->usuario->atualizar()){
+        if ($this->usuario->atualizar()) {
             header("Location: #");
             exit();
         }
         return false;
     }
 
-    public function excluirUsuario($id){
-        $this->usuario->id = $id;
+    public function excluirUsuario($id_usuario)
+    {
+        $this->usuario->id_usuario = $id_usuario;
 
-        if($this->usuario->excluir()){
+        if ($this->usuario->excluir()) {
             header("Location: index.php");
             exit();
         }
     }
 
-    public function login($email, $senha){
-        $this->usuario->email = $email;
-        $this->usuario->senha = $senha;
-        
-        $this->usuario->login();
+    public function login($email, $senha)
+    {
+        $usuario = $this->usuario->buscarPorEmail($email);
+
+        if ($usuario && password_verify($senha, $usuario->senha)) {
+            // Login OK → inicia sessão e salva dados
+            $_SESSION['id_usuario'] = $usuario->id_usuario;
+            $_SESSION['nome'] = $usuario->nome;
+
+            header("Location: ../index.php");
+            exit();
+        } else {
+            //echo "<p style='color:red;'>E-mail ou senha inválidos.</p>";
+        }
     }
 }
-
-
-?>

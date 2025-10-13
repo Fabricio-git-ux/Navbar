@@ -67,7 +67,7 @@ class categoriaController {
         $this->categoria->nome_categoria = $dados['nome_categoria'] ?? '';
 
         if($this->categoria->atualizar()){
-            header("Location: add_categoria.php");
+            header("Location: editar_categoria.php");
             exit();
         }
         return false;

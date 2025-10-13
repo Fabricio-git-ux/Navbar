@@ -1,24 +1,35 @@
 <?php
+session_start(); // inicia a sessão para acessar o ID do usuário
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include_once(__DIR__ . '/../controller/tarefaController.php');
 include_once(__DIR__ . '/../controller/categoriaController.php');
 
+// Verifica se usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    die("Você precisa estar logado para cadastrar tarefas.");
+}
+
 // Instancia os controllers
 $tarefaController = new tarefaController();
 $categoriaController = new categoriaController();
 
 // Busca todas as categorias para popular o <select>
-$categorias = $categoriaController->pesquisarCategoria(""); // ou use um método listarTodosCategorias()
+$categorias = $categoriaController->pesquisarCategoria("");
 
 // Cadastrar tarefa
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tarefa'])) {
+    // Adiciona o ID do usuário logado aos dados antes de enviar para o controller
+    $_POST['tarefa']['id_usuario'] = $_SESSION['usuario_id'];
+
     $tarefaController->cadastrarTarefa($_POST['tarefa']);
-    header("Location: /../Navbar/pages/tarefa.php");
+    header("Location: tarefa.php");
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -72,13 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tarefa'])) {
 
                     </select>
                 </div>
-                <button style="border: none;">
-                    <!-- Botão criar categoria -->
-                    <a href="../pages/add_categoria.php" class="btn btn-success">Criar Categoria</a>
-                </button>
+                <!-- Botão criar categoria -->
+                <a href="add_categoria.php" class="btn btn-success">Criar Categoria</a>
             </div>
-            
+
             <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <!-- <button type="submit" class="btn btn-secondary">Voltar</button> -->
 
         </form>
     </div>

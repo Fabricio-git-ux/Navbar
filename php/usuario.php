@@ -1,8 +1,8 @@
 <?php
 
-Class usuario
+class usuario
 {
-    public $id;
+    public $id_usuario;
     public $nome;
     public $email;
     public $senha;
@@ -35,11 +35,11 @@ Class usuario
     }
 
     // Pesquisar usuário por ID
-    public function pesquisarUsuario($id)
+    public function pesquisarUsuario($id_usuario)
     {
-        $sql = "SELECT * FROM usuario WHERE id = :id";
+        $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
         $stmt = $this->bd->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_OBJ);
@@ -62,12 +62,12 @@ Class usuario
     public function atualizar()
     {
         $senha_hash = password_hash($this->senha, PASSWORD_DEFAULT);
-        $sql = "UPDATE usuario SET nome = :nome, email = :email, senha = :senha WHERE id = :id";
+        $sql = "UPDATE usuario SET nome = :nome, email = :email, senha = :senha WHERE id_usuario = :id_usuario";
         $stmt = $this->bd->prepare($sql);
         $stmt->bindParam(':nome', $this->nome, PDO::PARAM_STR);
         $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
         $stmt->bindParam(':senha', $senha_hash, PDO::PARAM_STR);
-        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':id_usuario', $this->id_usuario, PDO::PARAM_INT);
 
         return $stmt->execute();
     }
@@ -75,9 +75,9 @@ Class usuario
     // Excluir usuário
     public function excluir()
     {
-        $sql = "DELETE FROM usuario WHERE id = :id";
+        $sql = "DELETE FROM usuario WHERE id_usuario = :id_usuarii";
         $stmt = $this->bd->prepare($sql);
-        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':id_usuario', $this->id_usuario, PDO::PARAM_INT);
 
         return $stmt->execute();
     }
@@ -91,14 +91,30 @@ Class usuario
         $stmt->execute();
         $resultado = $stmt->fetch(PDO::FETCH_OBJ);
 
-        if ($resultado && password_verify($this->senha, $resultado->senha)) {
-            if (session_status() === PHP_SESSION_NONE) session_start();
-            $_SESSION['usuario'] = $resultado;
-            header('Location: /Navbar/index.php');
-            exit();
-        } else {
-            header("Location: login.php?erro=1"); // Pode passar erro via GET
-            exit();
+        if($resultado){
+            if(password_verify($this->senha, $resultado->senha)){
+                session_start();
+                $_SESSION['usuario'] = $resultado;
+                return true;
+                exit();
+            } else {
+                session_start();
+                $_SESSION['erro'] = "Usuario ou senha invalido!";
+                return false;
+                header('Location: login.php');
+                exit();
+            }
         }
+    }
+
+    public function buscarPorEmail($email)
+    {
+        $sql = "SELECT * FROM usuario WHERE email = :email LIMIT 1";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        // Retorna um objeto com os dados ou false se não encontrar
+        return $stmt->fetch(PDO::FETCH_OBJ);
     }
 }
