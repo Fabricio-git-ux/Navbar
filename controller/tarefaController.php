@@ -24,7 +24,7 @@ class tarefaController
 
     public function cadastrarTarefa($dados)
     {
-         session_start(); // Inicia a sessão para acessar o ID do usuário
+        session_start(); // Inicia a sessão para acessar o ID do usuário
 
     if (!isset($_SESSION['id_usuario'])) {
         die("Usuário não logado."); // Segurança: evita cadastro sem login
@@ -36,7 +36,7 @@ class tarefaController
         $this->tarefa->id_categoria = $dados['id_categoria'] ?? 0;
 
         if ($this->tarefa->cadastrar()) {
-            header("Location: add_tarefa.php");
+            header("Location: ../pages/tarefa.php");
             exit();
         }
     }

@@ -2,7 +2,7 @@
 session_start(); // obrigatório para acessar o usuário logado
 
 // Verifica se usuário está logado
-if (!isset($_SESSION['usuario_id'])) {
+if (!isset($_SESSION['id_usuario'])) {
     die("Você precisa estar logado para acessar esta página.");
 }
 
@@ -11,7 +11,7 @@ include_once "controller/tarefaController.php";
 $controller = new tarefaController();
 
 // Buscar tarefas do usuário logado
-$listaTarefas = $controller->pesquisarTarefa($_SESSION['usuario_id']);
+$listaTarefas = $controller->pesquisarTarefa($_SESSION['id_usuario']);
 ?>
 
 
@@ -24,7 +24,7 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['usuario_id']);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style/nav.css">
+    <link rel="stylesheet" href="style/index.css">
     <title>Conteudo</title>
 </head>
 
@@ -103,16 +103,95 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['usuario_id']);
                     </svg>
                 </button>
             </div>
-            <div class="add_button">
+            <!-- <div class="add_button">
                 <button class="add"><i class="bi-plus-circle"></i></button>
-            </div>
+            </div> -->
         </form>
         <div class="conteudo">
             <!-- Conteúdo principal da página -->
             <h1>Tarefas</h1>
-            <div>
-
+            <!-- From Uiverse.io by ashwin_5681 -->
+            <div
+                class="slider"
+                style="--width: 200px;
+    --height: 200px;
+    --quantity: 9;">
+                <div class="list">
+                    <div class="item" style="--position: 1">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #ff7e5f, #feb47b)">
+                            <p>HELLO THERE</p>
+                            <p>Am Ashwin.A</p>
+                        </div>
+                    </div>
+                    <div class="item" style="--position: 2">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #6a11cb, #2575fc)">
+                            <p>Do follow on Insta</p>
+                            <p>ashwin_ambar_</p>
+                        </div>
+                    </div>
+                    <div class="item" style="--position: 3">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #00c6ff, #0072ff)">
+                            <p>Replace cards with images</p>
+                            <p>for a image slider</p>
+                        </div>
+                    </div>
+                    <div class="item" style="--position: 4">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #ff512f, #dd2476)">
+                            <p>Html css only</p>
+                            <p>Hover to stop the slides</p>
+                        </div>
+                    </div>
+                    <div class="item" style="--position: 5">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #ffb6c1, #ff69b4)">
+                            <p>Card 5</p>
+                            <p>Content for card 5</p>
+                        </div>
+                    </div>
+                    <div class="item" style="--position: 6">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #ff9a8b, #ffc3a0)">
+                            <p>Card 6</p>
+                            <p>Content for card 6</p>
+                        </div>
+                    </div>
+                    <div class="item" style="--position: 7">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #a1c4fd, #c2e9fb)">
+                            <p>Card 7</p>
+                            <p>Modify it and use</p>
+                        </div>
+                    </div>
+                    <div class="item" style="--position: 8">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #fbc2eb, #a18cd1)">
+                            <p>Card 8</p>
+                            <p>Content for card 8</p>
+                        </div>
+                    </div>
+                    <div class="item" style="--position: 9">
+                        <div
+                            class="card"
+                            style="background: linear-gradient(to right, #84fab0, #8fd3f4)">
+                            <p>card 9</p>
+                            <p>Content for card 9</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 

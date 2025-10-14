@@ -75,7 +75,7 @@ class usuario
     // Excluir usuário
     public function excluir()
     {
-        $sql = "DELETE FROM usuario WHERE id_usuario = :id_usuarii";
+        $sql = "DELETE FROM usuario WHERE id_usuario = :id_usuario";
         $stmt = $this->bd->prepare($sql);
         $stmt->bindParam(':id_usuario', $this->id_usuario, PDO::PARAM_INT);
 

@@ -8,7 +8,7 @@ include_once(__DIR__ . '/../controller/tarefaController.php');
 include_once(__DIR__ . '/../controller/categoriaController.php');
 
 // Verifica se usuário está logado
-if (!isset($_SESSION['usuario_id'])) {
+if (!isset($_SESSION['id_usuario'])) {
     die("Você precisa estar logado para cadastrar tarefas.");
 }
 
@@ -20,12 +20,12 @@ $categoriaController = new categoriaController();
 $categorias = $categoriaController->pesquisarCategoria("");
 
 // Cadastrar tarefa
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tarefa'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])) {
     // Adiciona o ID do usuário logado aos dados antes de enviar para o controller
-    $_POST['tarefa']['id_usuario'] = $_SESSION['usuario_id'];
+    $_POST['tarefa']['id_usuario'] = $_SESSION['id_usuario'];
 
     $tarefaController->cadastrarTarefa($_POST['tarefa']);
-    header("Location: tarefa.php");
+    header('Location: tarefa.php');
     exit();
 }
 ?>
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tarefa'])) {
     <div class="container py-5">
         <h1 class="mb-4">Cadastro de Tarefas</h1>
 
-        <form action="" method="post" class="mb-4 bg-white p-4 rounded shadow-sm">
+        <form action="add_tarefa.php" method="post" class="mb-4 bg-white p-4 rounded shadow-sm">
 
             <!-- TÍTULO -->
             <div class="mb-3">
@@ -87,8 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tarefa'])) {
                 <a href="add_categoria.php" class="btn btn-success">Criar Categoria</a>
             </div>
 
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
-            <!-- <button type="submit" class="btn btn-secondary">Voltar</button> -->
+            <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
+
+            <div class="btn" style="background: gray;">
+                <a href="tarefa.php" style="text-decoration: none; color: #fff;">Voltar</a>
+            </div>
+
 
         </form>
     </div>
