@@ -67,18 +67,6 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['id_usuario']);
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-calendar"></i></span>
-                    <span class="txt-link">Agenda</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-gear"></i></span>
-                    <span class="txt-link">Configuração</span>
-                </a>
-            </li>
-            <li class="item-menu">
                 <a href="pages/pag_usuario.php">
                     <span class="icon"><i class="bi bi-person-circle"></i></span>
                     <span class="txt-link">Conta</span>

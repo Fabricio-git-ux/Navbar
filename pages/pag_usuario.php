@@ -68,18 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['excluir'])) {
                     <span class="txt-link">Tarefas</span>
                 </a>
             </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-calendar"></i></span>
-                    <span class="txt-link">Agenda</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-gear"></i></span>
-                    <span class="txt-link">Configuração</span>
-                </a>
-            </li>
             <li class="item-menu ativo">
                 <a href="pag_usuario.php">
                     <span class="icon"><i class="bi bi-person-circle"></i></span>
