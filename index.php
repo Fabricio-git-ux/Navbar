@@ -6,6 +6,26 @@ if (!isset($_SESSION['id_usuario'])) {
     die("Você precisa estar logado para acessar esta página.");
 }
 
+// Instanciar os controllers
+require_once 'controller/tarefaController.php';
+require_once 'controller/categoriaController.php';
+
+$tarefaController = new tarefaController();
+$categoriaController = new categoriaController();
+
+
+// Metodos de contagem
+$totalTarefas = $tarefaController->contarTarefas();
+$totalConcluidas = $tarefaController->contarTarefasConcluidas();
+$totalPendentes = $tarefaController->contarTarefasPendente();
+$totalEmAndamento = $tarefaController->contarTarefasEmAndamento();
+/*$totalCategorias = $categoriaController->contarCategorias();*/
+
+
+// Exemplo de conexão e busca (ajuste conforme seu projeto)
+include_once "../controller/tarefaController.php";
+
+
 include_once "controller/tarefaController.php";
 
 $controller = new tarefaController();
@@ -16,7 +36,7 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['id_usuario']);
 
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -35,7 +55,7 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['id_usuario']);
         </div>
         <ul>
             <li class="item-menu ativo">
-                <a href="#">
+                <a href="index.php">
                     <span class="icon"><i class="bi bi-house-door"></i></span>
                     <span class="txt-link">Home</span>
                 </a>
@@ -59,7 +79,7 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['id_usuario']);
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
+                <a href="pages/pag_usuario.php">
                     <span class="icon"><i class="bi bi-person-circle"></i></span>
                     <span class="txt-link">Conta</span>
                 </a>
@@ -103,99 +123,74 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['id_usuario']);
                     </svg>
                 </button>
             </div>
-            <!-- <div class="add_button">
-                <button class="add"><i class="bi-plus-circle"></i></button>
-            </div> -->
+
+            <!-- Conteudo do index -->
         </form>
         <div class="conteudo">
-            <!-- Conteúdo principal da página -->
-            <h1>Tarefas</h1>
-            <!-- From Uiverse.io by ashwin_5681 -->
-            <div
-                class="slider"
-                style="--width: 200px;
-    --height: 200px;
-    --quantity: 9;">
-                <div class="list">
-                    <div class="item" style="--position: 1">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #ff7e5f, #feb47b)">
-                            <p>HELLO THERE</p>
-                            <p>Am Ashwin.A</p>
+            <h1 class="titulo">Total de tarefas feitas</h1>
+
+            <main class="tarefas">
+                <div class="card">
+                    <div class="content">
+                        <div class="front">
+                            <h3 class="title">Total de tarefas</h3>
                         </div>
-                    </div>
-                    <div class="item" style="--position: 2">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #6a11cb, #2575fc)">
-                            <p>Do follow on Insta</p>
-                            <p>ashwin_ambar_</p>
-                        </div>
-                    </div>
-                    <div class="item" style="--position: 3">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #00c6ff, #0072ff)">
-                            <p>Replace cards with images</p>
-                            <p>for a image slider</p>
-                        </div>
-                    </div>
-                    <div class="item" style="--position: 4">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #ff512f, #dd2476)">
-                            <p>Html css only</p>
-                            <p>Hover to stop the slides</p>
-                        </div>
-                    </div>
-                    <div class="item" style="--position: 5">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #ffb6c1, #ff69b4)">
-                            <p>Card 5</p>
-                            <p>Content for card 5</p>
-                        </div>
-                    </div>
-                    <div class="item" style="--position: 6">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #ff9a8b, #ffc3a0)">
-                            <p>Card 6</p>
-                            <p>Content for card 6</p>
-                        </div>
-                    </div>
-                    <div class="item" style="--position: 7">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #a1c4fd, #c2e9fb)">
-                            <p>Card 7</p>
-                            <p>Modify it and use</p>
-                        </div>
-                    </div>
-                    <div class="item" style="--position: 8">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #fbc2eb, #a18cd1)">
-                            <p>Card 8</p>
-                            <p>Content for card 8</p>
-                        </div>
-                    </div>
-                    <div class="item" style="--position: 9">
-                        <div
-                            class="card"
-                            style="background: linear-gradient(to right, #84fab0, #8fd3f4)">
-                            <p>card 9</p>
-                            <p>Content for card 9</p>
+
+                        <div class="back">
+                            <p class="description">
+                                tarefas realizadas:
+                                <?= $totalTarefas ?>
+                            </p>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="card">
+                    <div class="content">
+                        <div class="front">
+                            <h3 class="title">Concluidas</h3>
+                        </div>
 
+                        <div class="back">
+                            <p class="description">
+                                tarefas concluidas:
+                                <?= $totalConcluidas ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="content">
+                        <div class="front">
+                            <h3 class="title">Pendentes</h3>
+                        </div>
+
+                        <div class="back">
+                            <p class="description">
+                                tarefas pendentes:
+                                <?= $totalPendentes ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="content">
+                        <div class="front">
+                            <h3 class="title" id="titulo">Andamento</h3>
+                        </div>
+
+                        <div class="back">
+                            <p class="description" id="descricao">
+                                Em Andamento:
+                                <?= $totalEmAndamento ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
         </div>
-    </div>
 
-    <script src="js/script.js"></script>
+        <script src="js/script.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* ========================= MENU LATERAL ========================= */
+nav.menu-lateral {
+    width: 80px;
+    height: 100vh;
+    background-color: #202020;
+    padding: 40px 0 40px 1%;
+    box-shadow: 3px 0 0 #FF0077;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    transition: width 0.5s;
+    z-index: 1000;
+}
+
+nav.menu-lateral.expandir {
+    width: 300px;
+}
+
+/* Botão de expandir */
+.btn-expandir {
+    width: 100%;
+    padding-left: 10px;
+}
+
+.btn-expandir>i {
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Lista do menu */
+ul {
+    height: 100%;
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+ul li.item-menu {
+    transition: 0.2s;
+}
+
+ul li.item-menu:hover {
+    background: #FF0077;
+}
+
+ul li.ativo {
+    background-color: #FF0077;
+}
+
+ul li.item-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 20px 4%;
+    display: flex;
+    margin-bottom: 1px;
+    line-height: 30px;
+}
+
+ul li.item-menu a .txt-link {
+    margin-left: 70px;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+nav.menu-lateral.expandir .txt-link {
+    margin-left: 20px;
+    opacity: 1;
+}
+
+ul li.item-menu a .icon>i {
+    font-size: 25px;
+    margin-left: 7px;
+}
+
+/* ========================= RESPONSIVIDADE ========================= */
+
+/* Tablets (até 768px) */
+@media (max-width: 768px) {
+    nav.menu-lateral {
+        width: 70px;
+        padding: 20px 0;
+    }
+
+    nav.menu-lateral.expandir {
+        width: 250px;
+    }
+
+    ul li.item-menu a {
+        font-size: 18px;
+        padding: 15px 4%;
+    }
+
+    .conteudo {
+        margin-left: 70px;
+    }
+
+    nav.menu-lateral.expandir~.conteudo {
+        margin-left: 250px;
+    }
+}
+
+/* Celulares (até 480px) */
+@media (max-width: 480px) {
+    body {
+        flex-direction: column;
+    }
+
+    nav.menu-lateral {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 10px 0;
+        box-shadow: 0 3px 0 #FF0077;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    nav.menu-lateral.expandir {
+        width: 100%;
+    }
+
+    .btn-expandir {
+        padding-left: 20px;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        height: auto;
+        margin: 0;
+        width: 100%;
+    }
+
+    ul li.item-menu a .txt-link {
+        display: none;
+    }
+}
+
+
+/* Reset simples */
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+html, body { 
+  height: 100%; 
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; 
+  background: #f5f7fb; 
+  color: #1f2937; 
+}
+
+/* Container central */
+.page {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(31, 41, 55, 0.08);
+  padding: 28px;
+  border: 1px solid rgba(31, 41, 55, 0.04);
+}
+
+.card h1 {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+}
+
+.card p.subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+/* Campos do formulário */
+form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+label {
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  height: 44px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  background: #fbfdff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: box-shadow .12s, border-color .12s;
+}
+
+input:focus {
+  border-color: #7c3aed; /* violeta */
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.06);
+}
+
+/* Textos de ajuda ou erro */
+.hint {
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.error {
+  font-size: 0.82rem;
+  color: #dc2626;
+}
+
+/* Botões */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #6d28d9, #5b21b6);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(91, 33, 182, 0.18);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #374151;
+  border: 1px solid #e6e9ef;
+}
+
+/* Responsividade */
+@media (max-width: 520px) {
+  .card { 
+    padding: 20px; 
+    border-radius: 10px; 
+  }
+
+  .actions { 
+    flex-direction: column-reverse; 
+    gap: 8px; 
+  }
+
+  .btn { 
+    width: 100%; 
+  }
+}

@@ -3,7 +3,7 @@
 include_once(__DIR__ . '/../configs/database.php');
 include_once(__DIR__ . '/../php/usuario.php');
 
-class usuarioController
+Class usuarioController
 {
     private $bd;
     private $usuario;
@@ -20,9 +20,9 @@ class usuarioController
         return $this->usuario->lerUsuario($nome);
     }
 
-    public function localizarUsuario($id)
+    public function localizarUsuario($id_usuario)
     {
-        return $this->usuario->pesquisarUsuario($id);
+        return $this->usuario->pesquisarUsuario($id_usuario);
     }
 
     public function cadastrarUsuario($dados)
@@ -42,7 +42,7 @@ class usuarioController
         $this->usuario->senha = $dados['senha'];
 
         if ($this->usuario->atualizar()) {
-            header("Location: #");
+            header("Location: ../pages/pag_usuario.php");
             exit();
         }
         return false;

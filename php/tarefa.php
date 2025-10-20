@@ -37,6 +37,37 @@ class tarefa
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function contarTarefa($idUsuario){
+        $sql = "SELECT COUNT(*) FROM tarefa WHERE id_usuario = :id_usuario";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->execute([':id_usuario' => $idUsuario]);
+
+        return $stmt->fetchColumn();
+    }
+
+    public function contarTarefasConcluidas($idUsuario){
+        $sql = "SELECT COUNT(*) FROM tarefa WHERE status = 'concluido' AND id_usuario = :id_usuario";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->execute([':id_usuario' => $idUsuario]);
+
+        return $stmt->fetchColumn();
+    }
+
+    public function contarTarefaPendente($idUsuario){
+        $sql = "SELECT COUNT(*) FROM tarefa WHERE status = 'pendente' AND id_usuario = :id_usuario";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->execute([':id_usuario' => $idUsuario]);
+
+        return $stmt->fetchColumn();
+    }
+
+    public function contarTarefaEmAndamento($idUsuario){
+        $sql = "SELECT COUNT(*) FROM tarefa WHERE status = 'em andamento' AND id_usuario = :id_usuario";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->execute([':id_usuario' => $idUsuario]);
+
+        return $stmt->fetchColumn();
+    }
 
     public function pesquisarTarefa($id_tarefa)
     {

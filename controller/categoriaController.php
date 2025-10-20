@@ -8,20 +8,14 @@ class categoriaController {
     private $categoria;
 
     public function __construct() {
-        try {
-            $banco = new DataBase();
-            $this->bd = $banco->conectar();
+        $banco = new DataBase();
+        $this->bd = $banco->conectar();
+        $this->categoria = new categoria($this->bd);
+    }
 
-            if (!$this->bd) {
-                $this->categoria = null;
-            } else {
-                $this->categoria = new categoria($this->bd);
-            }
-        } catch (\Throwable $e) {
-            error_log("Erro no categoriaController: " . $e->getMessage());
-            $this->bd = null;
-            $this->categoria = null;
-        }
+    public function contarCategorias(){
+        $idUsuario = $_SESSION['id_usuario'];
+        return $this->categoria->contarCategorias($idUsuario);
     }
 
     // Pesquisa categorias pelo nome (LIKE)

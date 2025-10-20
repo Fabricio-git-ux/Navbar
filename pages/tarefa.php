@@ -36,9 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['excluir'])) {
 // Listar todas as tarefas
 $tarefa = $controller->pesquisarTarefa(""); // Aqui pode ser um método que retorna todas as tarefas
 
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +66,7 @@ $tarefa = $controller->pesquisarTarefa(""); // Aqui pode ser um método que reto
                 </a>
             </li>
             <li class="item-menu ativo">
-                <a href="#">
+                <a href="tarefa.php">
                     <span class="icon"><i class="bi bi-card-checklist"></i></i></span>
                     <span class="txt-link">Tarefas</span>
                 </a>
@@ -87,7 +84,7 @@ $tarefa = $controller->pesquisarTarefa(""); // Aqui pode ser um método que reto
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
+                <a href="pag_usuario.php">
                     <span class="icon"><i class="bi bi-person-circle"></i></span>
                     <span class="txt-link">Conta</span>
                 </a>

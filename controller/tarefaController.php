@@ -17,6 +17,27 @@ class tarefaController
         $this->tarefa =  new tarefa($this->bd);
     }
 
+    public function contarTarefas(){
+        $idUsuario = $_SESSION['id_usuario'];
+        return $this->tarefa->contarTarefa($idUsuario);
+    }
+
+    public function contarTarefasConcluidas(){
+        $idUsuario = $_SESSION['id_usuario'];
+        return $this->tarefa->contarTarefasConcluidas($idUsuario);
+    }
+
+    public function contarTarefasPendente(){
+        $idUsuario = $_SESSION['id_usuario'];
+        return $this->tarefa->contarTarefaPendente($idUsuario);
+    }
+
+    public function contarTarefasEmAndamento(){
+        $idUsuario = $_SESSION['id_usuario'];
+        return $this->tarefa->contarTarefaEmAndamento($idUsuario);
+    }
+
+
     public function pesquisarTarefa($titulo)
     {
         return $this->tarefa->lerTarefa($titulo);

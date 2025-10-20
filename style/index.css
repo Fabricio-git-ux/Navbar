@@ -37,7 +37,7 @@ nav.menu-lateral.expandir {
     padding-left: 10px;
 }
 
-.btn-expandir > i {
+.btn-expandir>i {
     color: #fff;
     font-size: 24px;
     cursor: pointer;
@@ -84,7 +84,7 @@ nav.menu-lateral.expandir .txt-link {
     opacity: 1;
 }
 
-ul li.item-menu a .icon > i {
+ul li.item-menu a .icon>i {
     font-size: 25px;
     margin-left: 7px;
 }
@@ -154,7 +154,7 @@ form {
 
 /* ========================= BOTÃO DE + ========================= */
 
-.add_button .add{
+.add_button .add {
     border: none;
     background: #fff;
     font-size: 35px;
@@ -162,7 +162,7 @@ form {
     cursor: pointer;
 }
 
-.bi-plus-circle{
+.bi-plus-circle {
     border: none #fff;
     background: #fff;
 }
@@ -175,7 +175,7 @@ form {
     transition: margin-left 0.5s;
 }
 
-nav.menu-lateral.expandir ~ .conteudo {
+nav.menu-lateral.expandir~.conteudo {
     margin-left: 300px;
 }
 
@@ -201,7 +201,7 @@ nav.menu-lateral.expandir ~ .conteudo {
         margin-left: 70px;
     }
 
-    nav.menu-lateral.expandir ~ .conteudo {
+    nav.menu-lateral.expandir~.conteudo {
         margin-left: 250px;
     }
 
@@ -266,75 +266,75 @@ nav.menu-lateral.expandir ~ .conteudo {
 }
 
 
-/* Carrossel */
+/* ========================= Cards do index ========================= */
 
-/* From Uiverse.io by ashwin_5681 */ 
+.tarefas{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
 .card {
-  width: 100%;
-  height: 100%;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  color: white;
-  text-align: center;
+    width: 12rem;
+    cursor: pointer;
+    border-radius: 30px;
 }
 
-.card p {
-  font-size: 14px;
-  color: white;
+.content {
+    text-align: center;
+    position: relative;
+    transition: all 2.25s;
+    background-color: rgb(127, 204, 240);
+    padding: 5em;
+    transform-style: preserve-3d;
+    border-radius: 30px;
 }
 
-.slider {
-  width: 100%;
-  height: var(--height);
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, #000 10% 90%, transparent);
+
+.card:hover .content {
+    transform: rotateY(0.5turn);
 }
 
-.slider .list {
-  display: flex;
-  width: 100%;
-  min-width: calc(var(--width) * var(--quantity));
-  position: relative;
+.front,
+.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 2em;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    border-radius: 30px;
 }
-.slider .list .item {
-  width: var(--width);
-  height: var(--height);
-  position: absolute;
-  left: 100%;
-  animation: autoRun 10s linear infinite;
-  transition: filter 0.5s;
-  animation-delay: calc(
-    (10s / var(--quantity)) * (var(--position) - 1) - 10s
-  ) !important;
+
+.title {
+    transform: translateZ(5rem);
+    font-size: 1.6rem;
 }
-.slider .list .item img {
-  width: 100%;
+
+.subtitle {
+    transform: translateZ(2rem);
 }
-@keyframes autoRun {
-  from {
-    left: 100%;
-  }
-  to {
-    left: calc(var(--width) * -1);
-  }
+
+.back {
+    transform: rotateY(0.5turn);
+    background-color: #009bff;
 }
-.slider:hover .item {
-  animation-play-state: paused !important;
-  filter: grayscale(1);
+
+.description {
+    transform: translateZ(3rem);
 }
-.slider .item:hover {
-  filter: grayscale(0);
+
+#titulo{
+    font-size: 23px;
 }
-.slider[reverse="true"] .item {
-  animation: reversePlay 10s linear infinite;
+
+#descricao{
+    font-size: 22px;
 }
-@keyframes reversePlay {
-  from {
-    left: calc(var(--width) * -1);
-  }
-  to {
-    left: 100%;
-  }
+
+p {
+    font-size: 25px;
 }
+

@@ -37,7 +37,7 @@ class usuario
     // Pesquisar usuário por ID
     public function pesquisarUsuario($id_usuario)
     {
-        $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
+        $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario LIMIT 1";
         $stmt = $this->bd->prepare($sql);
         $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
         $stmt->execute();
