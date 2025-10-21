@@ -1,9 +1,15 @@
 <?php
 session_start(); // obrigatório para acessar o usuário logado
 
-// Verifica se usuário está logado
-if (!isset($_SESSION['id_usuario'])) {
-    die("Você precisa estar logado para acessar esta página.");
+// Inicia a sessão se ainda não estiver iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verifica se usuário está logado (normal ou Google)
+if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
+    header('Location: ../Navbar/error/acesso.php');
+    exit();
 }
 
 // Instanciar os controllers

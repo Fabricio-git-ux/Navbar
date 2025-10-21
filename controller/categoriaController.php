@@ -50,6 +50,8 @@ class categoriaController {
     public function cadastrarCategoria($dados){
         if (!$this->categoria) return false;
         $this->categoria->nome_categoria = $dados['nome_categoria'] ?? '';
+        $this->categoria->id_categoria = $dados['id_categoria'];
+        $this->categoria->id_usuario = $_SESSION['id_usuario'];
         return $this->categoria->cadastrar();
     }
 

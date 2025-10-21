@@ -1,0 +1,50 @@
+        body {
+            background: linear-gradient(165deg, #dbdada, #ecd9d7);
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .error-card {
+            background: #fff;
+            color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .error-icon {
+            font-size: 60px;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            animation: pulse 1.5s infinite;
+        }
+
+
+        .btn-custom {
+            background: #e74c3c;
+            border: none;
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 8px;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-custom:hover {
+            background: #c0392b;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }

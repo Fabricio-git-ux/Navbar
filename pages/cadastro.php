@@ -26,7 +26,6 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
 </head>
 <body class="container">
 
-    <!-- From Uiverse.io by ammarsaa --> 
 <form class="form" method="POST">
     <p class="title">Cadastrar </p>
     <p class="message">Inscreva-se. </p>

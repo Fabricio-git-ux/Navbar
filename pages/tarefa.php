@@ -4,6 +4,18 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Inicia a sessão se ainda não estiver iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verifica se usuário está logado (normal ou Google)
+if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
+    header('Location: ../../Navbar/error/acesso.php');
+    exit;
+}
+
+
 
 include_once "../controller/tarefaController.php";
 

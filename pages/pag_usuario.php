@@ -7,8 +7,23 @@ ini_set('display_errors', 1);
 include_once "../configs/database.php";
 include_once "../controller/usuarioController.php";
 
-if (!isset($_SESSION['id_usuario'])) {
-    die('Você precisa estar logado para acessar esta página.');
+// Inicia a sessão se ainda não estiver iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verifica se usuário está logado (normal ou Google)
+if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
+    header('Location: ../../Navbar/error/acesso.php');
+    exit;
+}
+
+// Se o usuário normal está logado
+$nome = isset($u->nome) ? $u->nome : null;
+
+// Se o usuário Google está logado
+if (!$nome && isset($_SESSION['usuarios_google'])) {
+    $nome = $_SESSION['usuarios_google']['nome'];
 }
 
 $controller = new usuarioController();

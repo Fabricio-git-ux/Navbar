@@ -14,6 +14,13 @@ class usuarioGoogle
         $this->gi = $gi;
     }
 
+    public function lerTodos()
+    {
+        $sql = "SELECT * FROM usuarios_google";
+        $stmt = $this->gi->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public function cadastroGoogle()
     {
         $sql = "INSERT INTO usuarios_google(google_id, nome, email, picture) VALUES (:google_id, :nome, :email, :picture)";
@@ -48,35 +55,35 @@ class usuarioGoogle
         return $stmt->execute();
     }
 
+    public function loginGoogle()
+    {
+        $sql = "SELECT * FROM usuarios_google WHERE email = :email LIMIT 1";
+        $stmt = $this->gi->prepare($sql);
+        $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($resultado) {
+            if (session_status() === PHP_SESSION_NONE) session_start();
+            $_SESSION['usuarios_google'] = [
+                'id' => $resultado->id,
+                'nome' => $resultado->nome,
+                'email' => $resultado->email,
+                'picture' => $resultado->picture
+            ];
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function buscarPorEmail($email)
     {
-        $sql = "SELECT * FROM usuarios_google WHERE email = :email";
+        $sql = "SELECT * FROM usuarios_google WHERE email = :email LIMIT 1";
         $stmt = $this->gi->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
+
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
-
-    public function loginGoogle()
-{
-    $sql = "SELECT * FROM usuarios_google WHERE email = :email";
-    $stmt = $this->gi->prepare($sql);
-    $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
-    $stmt->execute();
-    $resultado = $stmt->fetch(PDO::FETCH_OBJ);
-
-    if ($resultado) {
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        $_SESSION['usuarios_google'] = [
-            'id' => $resultado->id,
-            'nome' => $resultado->nome,
-            'email' => $resultado->email,
-            'picture' => $resultado->picture
-        ];
-        return true;
-    } else {
-        return false;
-    }
-}
-
 }
