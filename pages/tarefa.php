@@ -19,7 +19,24 @@ if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
 
 include_once "../controller/tarefaController.php";
 
+// Pega o ID do usuário logado: 
+// se for login normal ($_SESSION['id_usuario']), usa ele; 
+// se for login Google ($_SESSION['usuarios_google']['id']), usa esse; 
+// se nenhum estiver definido, fica NULL
 $id_usuario = $_SESSION['id_usuario'] ?? $_SESSION['usuarios_google']['id'] ?? NULL;
+
+/* Verifica qual tipo de usuário está logado e pega o ID correspondente
+if (isset($_SESSION['id_usuario'])) {
+    // Usuário normal logado
+    $id_usuario = $_SESSION['id_usuario'];
+} elseif (isset($_SESSION['usuarios_google']['id'])) {
+    // Usuário logado pelo Google
+    $id_usuario = $_SESSION['usuarios_google']['id'];
+} else {
+    // Nenhum usuário logado
+    $id_usuario = NULL;
+} */
+
 
 if(!$id_usuario){
     header('Location: ../../Navbar/error/acesso.php');
