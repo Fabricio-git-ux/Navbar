@@ -19,7 +19,7 @@ if (!isset($_GET['id_categoria']) || empty($_GET['id_categoria'])) {
     die("ID da categoria inválido.");
 }
 
-$id = (int) $_GET['id_categoria'];
+$id = $_GET['id_categoria'];
 
 // Busca a categoria atual
 $categoria = $controller->localizarCategoriaPorID($id);
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_categoria'])) {
     if ($novoNome !== '') {
         $controller->atualizarCategoria([
             'id_categoria' => $id,
-            'nome_categoria' => $novoNome
+            'nome_categoria' => $nome
         ]);
         header("Location: categorias.php"); // redireciona para a lista
         exit();
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_categoria'])) {
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-<head>
+<head>2
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Categoria</title>

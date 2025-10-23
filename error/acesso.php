@@ -26,7 +26,7 @@ session_start();
     </div>
 
     <footer>
-        &copy; <?= date("Y"); ?> Seu Sistema — Todos os direitos reservados
+        &copy; Seu Sistema — Todos os direitos reservados
     </footer>
 
 </body>

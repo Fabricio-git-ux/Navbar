@@ -2,6 +2,9 @@
 session_start(); // obrigatório para acessar o usuário logado
 
 // Inicia a sessão se ainda não estiver iniciada
+//PHP_SESSION_NONE é uma constante do PHP usada para verificar o status da sessão.
+//Ela indica que: Nenhuma sessão existe no momento.
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

@@ -20,14 +20,7 @@ class categoriaController {
 
     // Pesquisa categorias pelo nome (LIKE)
     public function pesquisarCategoria($nome_categoria){
-        if ($this->categoria) {
-            return $this->categoria->lerCategoria($nome_categoria);
-        }
-
-        // Mock temporário para teste do select
-        return [
-            ['id_categoria' => 1, 'nome_categoria' => 'Categoria de teste'],
-        ];
+        return $this->categoria->lerCategoria($nome_categoria);
     }
 
     // Localizar categoria pelo ID
@@ -57,7 +50,6 @@ class categoriaController {
 
     // Atualizar categoria existente
     public function atualizarCategoria($dados){
-        if (!$this->categoria) return false;
 
         $this->categoria->id_categoria = $dados['id_categoria'] ?? 0;
         $this->categoria->nome_categoria = $dados['nome_categoria'] ?? '';
