@@ -79,7 +79,7 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['id_usuario']);
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
+                <a href="pages/login.php">
                     <span class="icon"><i class="bi bi-box-arrow-left"></i></span>
                     <span class="txt-link">Saída</span>
                 </a>

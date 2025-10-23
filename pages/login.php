@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 <body class="container">
 
-  <!-- From Uiverse.io by mahiatlinux -->
+  <!-- Formulario de login -->
   <form class="form" method="POST" action="login.php">
     <div class="flex-column">
       <label>Email </label>

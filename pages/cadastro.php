@@ -45,10 +45,6 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
         <input class="input" type="password" name="usuario[senha]" required="">
         <span>Senha</span>
     </label>
-    <label>
-        <input class="input" type="password" name="usuario[telefone]" required="">
-        <span>Telefone</span>
-    </label>
     <button class="submit" type="submit">Cadastrar</button>
     <p class="signin">Já tem uma conta? <a href="login.php">Signin</a> </p>
 </form>

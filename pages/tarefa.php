@@ -12,12 +12,19 @@ if (session_status() === PHP_SESSION_NONE) {
 // Verifica se usuário está logado (normal ou Google)
 if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
     header('Location: ../../Navbar/error/acesso.php');
-    exit;
+    exit();
 }
 
 
 
 include_once "../controller/tarefaController.php";
+
+$id_usuario = $_SESSION['id_usuario'] ?? $_SESSION['usuarios_google']['id'] ?? NULL;
+
+if(!$id_usuario){
+    header('Location: ../../Navbar/error/acesso.php');
+    exit();
+}
 
 $t = null;
 
@@ -45,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['excluir'])) {
 }
 
 
-// Listar todas as tarefas
-$tarefa = $controller->pesquisarTarefa(""); // Aqui pode ser um método que retorna todas as tarefas
+// Listar todas as tarefas por id do usuario
+$tarefa = $controller->ListarPorUsuario($id_usuario); 
 
 ?>
 
@@ -90,7 +97,7 @@ $tarefa = $controller->pesquisarTarefa(""); // Aqui pode ser um método que reto
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
+                <a href="login.php">
                     <span class="icon"><i class="bi bi-box-arrow-left"></i></span>
                     <span class="txt-link">Saída</span>
                 </a>

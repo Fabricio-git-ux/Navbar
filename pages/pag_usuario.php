@@ -6,7 +6,6 @@ ini_set('display_errors', 1);
 
 include_once "../configs/database.php";
 include_once "../controller/usuarioController.php";
-
 // Inicia a sessão se ainda não estiver iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -16,14 +15,6 @@ if (session_status() === PHP_SESSION_NONE) {
 if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
     header('Location: ../../Navbar/error/acesso.php');
     exit;
-}
-
-// Se o usuário normal está logado
-$nome = isset($u->nome) ? $u->nome : null;
-
-// Se o usuário Google está logado
-if (!$nome && isset($_SESSION['usuarios_google'])) {
-    $nome = $_SESSION['usuarios_google']['nome'];
 }
 
 $controller = new usuarioController();
@@ -90,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['excluir'])) {
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
+                <a href="login.php">
                     <span class="icon"><i class="bi bi-box-arrow-left"></i></span>
                     <span class="txt-link">Saída</span>
                 </a>
