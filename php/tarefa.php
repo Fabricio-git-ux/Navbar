@@ -37,7 +37,8 @@ class tarefa
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function contarTarefa($idUsuario){
+    public function contarTarefa($idUsuario)
+    {
         $sql = "SELECT COUNT(*) FROM tarefa WHERE id_usuario = :id_usuario";
         $stmt = $this->bd->prepare($sql);
         $stmt->execute([':id_usuario' => $idUsuario]);
@@ -45,7 +46,8 @@ class tarefa
         return $stmt->fetchColumn();
     }
 
-    public function contarTarefasConcluidas($idUsuario){
+    public function contarTarefasConcluidas($idUsuario)
+    {
         $sql = "SELECT COUNT(*) FROM tarefa WHERE status = 'concluido' AND id_usuario = :id_usuario";
         $stmt = $this->bd->prepare($sql);
         $stmt->execute([':id_usuario' => $idUsuario]);
@@ -53,7 +55,8 @@ class tarefa
         return $stmt->fetchColumn();
     }
 
-    public function contarTarefaPendente($idUsuario){
+    public function contarTarefaPendente($idUsuario)
+    {
         $sql = "SELECT COUNT(*) FROM tarefa WHERE status = 'pendente' AND id_usuario = :id_usuario";
         $stmt = $this->bd->prepare($sql);
         $stmt->execute([':id_usuario' => $idUsuario]);
@@ -61,7 +64,8 @@ class tarefa
         return $stmt->fetchColumn();
     }
 
-    public function contarTarefaEmAndamento($idUsuario){
+    public function contarTarefaEmAndamento($idUsuario)
+    {
         $sql = "SELECT COUNT(*) FROM tarefa WHERE status = 'em andamento' AND id_usuario = :id_usuario";
         $stmt = $this->bd->prepare($sql);
         $stmt->execute([':id_usuario' => $idUsuario]);
@@ -78,6 +82,17 @@ class tarefa
 
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
+    public function buscarPorUsuario($id_usuario)
+    {
+        $sql = "SELECT * FROM tarefa WHERE id_usuario = :id_usuario";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
 
     public function cadastrar()
     {
@@ -108,7 +123,7 @@ class tarefa
         date_default_timezone_set('America/Sao_Paulo');
         $this->data_atualizacao =  date('Y-m-d H:i:s');
         $stmt->bindValue(':data_atualizacao', $this->data_atualizacao, PDO::PARAM_STR);
-        
+
         $stmt->bindParam(':id_tarefa', $this->id_tarefa, PDO::PARAM_INT);
 
         if ($stmt->execute()) {

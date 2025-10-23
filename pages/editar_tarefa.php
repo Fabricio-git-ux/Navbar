@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // Ativa exibição de erros (desenvolvimento)
 error_reporting(E_ALL);

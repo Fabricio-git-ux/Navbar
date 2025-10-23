@@ -1,9 +1,18 @@
 <?php
 session_start(); // obrigatório para acessar o usuário logado
 
-// Verifica se usuário está logado
-if (!isset($_SESSION['id_usuario'])) {
-    die("Você precisa estar logado para acessar esta página.");
+// Inicia a sessão se ainda não estiver iniciada
+//PHP_SESSION_NONE é uma constante do PHP usada para verificar o status da sessão.
+//Ela indica que: Nenhuma sessão existe no momento.
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verifica se usuário está logado (normal ou Google)
+if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
+    header('Location: ../Navbar/error/acesso.php');
+    exit();
 }
 
 // Instanciar os controllers
@@ -67,25 +76,13 @@ $listaTarefas = $controller->pesquisarTarefa($_SESSION['id_usuario']);
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-calendar"></i></span>
-                    <span class="txt-link">Agenda</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-gear"></i></span>
-                    <span class="txt-link">Configuração</span>
-                </a>
-            </li>
-            <li class="item-menu">
                 <a href="pages/pag_usuario.php">
                     <span class="icon"><i class="bi bi-person-circle"></i></span>
                     <span class="txt-link">Conta</span>
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
+                <a href="pages/login.php">
                     <span class="icon"><i class="bi bi-box-arrow-left"></i></span>
                     <span class="txt-link">Saída</span>
                 </a>

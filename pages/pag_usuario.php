@@ -6,9 +6,15 @@ ini_set('display_errors', 1);
 
 include_once "../configs/database.php";
 include_once "../controller/usuarioController.php";
+// Inicia a sessão se ainda não estiver iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-if (!isset($_SESSION['id_usuario'])) {
-    die('Você precisa estar logado para acessar esta página.');
+// Verifica se usuário está logado (normal ou Google)
+if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
+    header('Location: ../../Navbar/error/acesso.php');
+    exit;
 }
 
 $controller = new usuarioController();
@@ -68,18 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['excluir'])) {
                     <span class="txt-link">Tarefas</span>
                 </a>
             </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-calendar"></i></span>
-                    <span class="txt-link">Agenda</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-gear"></i></span>
-                    <span class="txt-link">Configuração</span>
-                </a>
-            </li>
             <li class="item-menu ativo">
                 <a href="pag_usuario.php">
                     <span class="icon"><i class="bi bi-person-circle"></i></span>
@@ -87,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['excluir'])) {
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
+                <a href="login.php">
                     <span class="icon"><i class="bi bi-box-arrow-left"></i></span>
                     <span class="txt-link">Saída</span>
                 </a>

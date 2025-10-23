@@ -43,6 +43,13 @@ class tarefaController
         return $this->tarefa->lerTarefa($titulo);
     }
 
+    public function listarPorUsuario($id_usuario)
+    {
+        $tarefa = new tarefa($this->bd);
+        return $tarefa->buscarPorUsuario($id_usuario);
+    }
+
+
     public function cadastrarTarefa($dados)
     {
         session_start(); // Inicia a sessão para acessar o ID do usuário

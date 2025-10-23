@@ -62,9 +62,11 @@ Class categoria
 
     public function cadastrar()
     {
-        $sql = "INSERT INTO categoria(nome_categoria) VALUES (:nome_categoria)";
+        $sql = "INSERT INTO categoria(nome_categoria, id_categoria, id_usuario) VALUES (:nome_categoria, :id_categoria, :id_usuario)";
         $stmt = $this->bd->prepare($sql);
+        $stmt->bindParam(':id_categoria', $this->id_categoria, PDO::PARAM_INT);
         $stmt->bindParam(':nome_categoria', $this->nome_categoria, PDO::PARAM_STR);
+        $stmt->bindParam(':id_usuario', $this->id_usuario, PDO::PARAM_INT);
         return $stmt->execute();
     }
 

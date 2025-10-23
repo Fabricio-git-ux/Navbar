@@ -1,6 +1,13 @@
 <?php
+session_start();
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// Verifica se usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: ../../Navbar/error/acesso.php');
+}
 
 include_once(__DIR__ . '/../controller/categoriaController.php');
 

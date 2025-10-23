@@ -61,4 +61,21 @@ class googleController
             return $this->usuario_google->loginGoogle();
         }
     }
+
+    public function login($email)
+    {
+        $usuario_google = $this->usuario_google->buscarPorEmail($email);
+
+        if (!filter_var($usuario_google['email'], FILTER_VALIDATE_EMAIL)) {
+
+            // Login OK → inicia sessão e salva dados
+            $_SESSION['id_usuario'] = $usuario_google->id_usuario;
+            $_SESSION['nome'] = $usuario_google->nome;
+
+            header("Location: ../index.php");
+            exit();
+        } else {
+            //echo "<p style='color:red;'>E-mail ou senha inválidos.</p>";
+        }
+    }
 }

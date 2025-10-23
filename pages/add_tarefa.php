@@ -9,7 +9,7 @@ include_once(__DIR__ . '/../controller/categoriaController.php');
 
 // Verifica se usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
-    die("Você precisa estar logado para cadastrar tarefas.");
+    header('Location: ../../Navbar/error/acesso.php');
 }
 
 // Instancia os controllers

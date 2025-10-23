@@ -26,7 +26,6 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
 </head>
 <body class="container">
 
-    <!-- From Uiverse.io by ammarsaa --> 
 <form class="form" method="POST">
     <p class="title">Cadastrar </p>
     <p class="message">Inscreva-se. </p>
@@ -45,10 +44,6 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['usuario'])){
     <label>
         <input class="input" type="password" name="usuario[senha]" required="">
         <span>Senha</span>
-    </label>
-    <label>
-        <input class="input" type="password" name="usuario[telefone]" required="">
-        <span>Telefone</span>
     </label>
     <button class="submit" type="submit">Cadastrar</button>
     <p class="signin">Já tem uma conta? <a href="login.php">Signin</a> </p>

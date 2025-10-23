@@ -4,8 +4,44 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Inicia a sessão se ainda não estiver iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verifica se usuário está logado (normal ou Google)
+if (!isset($_SESSION['id_usuario']) && !isset($_SESSION['usuarios_google'])) {
+    header('Location: ../../Navbar/error/acesso.php');
+    exit();
+}
+
+
 
 include_once "../controller/tarefaController.php";
+
+// Pega o ID do usuário logado: 
+// se for login normal ($_SESSION['id_usuario']), usa ele; 
+// se for login Google ($_SESSION['usuarios_google']['id']), usa esse; 
+// se nenhum estiver definido, fica NULL
+$id_usuario = $_SESSION['id_usuario'] ?? $_SESSION['usuarios_google']['id'] ?? NULL;
+
+/* Verifica qual tipo de usuário está logado e pega o ID correspondente
+if (isset($_SESSION['id_usuario'])) {
+    // Usuário normal logado
+    $id_usuario = $_SESSION['id_usuario'];
+} elseif (isset($_SESSION['usuarios_google']['id'])) {
+    // Usuário logado pelo Google
+    $id_usuario = $_SESSION['usuarios_google']['id'];
+} else {
+    // Nenhum usuário logado
+    $id_usuario = NULL;
+} */
+
+
+if(!$id_usuario){
+    header('Location: ../../Navbar/error/acesso.php');
+    exit();
+}
 
 $t = null;
 
@@ -33,8 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['excluir'])) {
 }
 
 
-// Listar todas as tarefas
-$tarefa = $controller->pesquisarTarefa(""); // Aqui pode ser um método que retorna todas as tarefas
+// Listar todas as tarefas por id do usuario
+$tarefa = $controller->ListarPorUsuario($id_usuario); 
 
 ?>
 
@@ -72,25 +108,13 @@ $tarefa = $controller->pesquisarTarefa(""); // Aqui pode ser um método que reto
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-calendar"></i></span>
-                    <span class="txt-link">Agenda</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-gear"></i></span>
-                    <span class="txt-link">Configuração</span>
-                </a>
-            </li>
-            <li class="item-menu">
                 <a href="pag_usuario.php">
                     <span class="icon"><i class="bi bi-person-circle"></i></span>
                     <span class="txt-link">Conta</span>
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
+                <a href="login.php">
                     <span class="icon"><i class="bi bi-box-arrow-left"></i></span>
                     <span class="txt-link">Saída</span>
                 </a>
